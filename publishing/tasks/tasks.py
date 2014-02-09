@@ -32,6 +32,6 @@ class DebugTask(Task):
 
 
 @task(base=DebugTask)
-def publish(message=None):
+def publish(user_id, post_id):
     graph = facebook.GraphAPI(token['access_token'])
     return graph.put_object("me", "feed", message="task...!")
