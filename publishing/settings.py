@@ -51,8 +51,8 @@ SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-MEDIA_ROOT = ''
-MEDIA_URL = ''
+MEDIA_ROOT = ROOT_PATH + '/media/'
+MEDIA_URL = '/media/'
 
 
 STATICFILES_DIRS = (
@@ -83,6 +83,19 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+)
+
+LANGUAGES = (
+    ('es', 'Espanol'),
+)
+LANGUAGE_CODE = 'es'
+
+USE_I18N = True
+USE_I10N = True
+
+LOCALE_PATHS = (
+    ROOT_PATH + '/locale',
 )
 
 TEMPLATE_DIRS = (

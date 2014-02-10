@@ -5,9 +5,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout
 
 from publishing.connect.forms import PublishingForm
+from publishing.tasks.models import Message
 from djcelery.models import IntervalSchedule
 from djcelery.models import PeriodicTask
 from djcelery.models import CrontabSchedule
+from publishing.utils import slug
 
 
 def logout(request):
@@ -29,7 +31,10 @@ def done(request):
         if form.is_valid():
             cd = form.cleaned_data
             interval = IntervalSchedule.objects.get(pk=int(cd['interval']))
-            a = PeriodicTask(name='task-arley-publish-', task='publishing.tasks.tasks.publish', interval=interval, args=[request.user.id, post_id])
+            message = Message.objects.get(pk=int(cd['message']))
+            task_name = slug("{0}-{1}-{2}".format(request.user.username, interval, message.caption))
+            print task_name, interval
+            a = PeriodicTask(name=task_name, task='publishing.tasks.tasks.publish', interval=interval, args=[request.user.id, message.id])
             a.save()
             return render_to_response('done.html', {
                 'user': request.user,

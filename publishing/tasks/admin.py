@@ -1,13 +1,13 @@
 from django.contrib import admin
-from django.contrib.flatpages.models import FlatPage 
-class FlatPageAdmin(admin.ModelAdmin):
+from publishing.tasks.models import Message
+
+class MessageAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('url', 'title', 'content', 'sites')
-        }),
-        ('Advanced options', {
-            'classes': ('collapse',),
-            'fields': ('enable_comments', 'registration_required', 'template_name')
+            'fields': ('caption', 'description', 'message', 'image', 'enabled')
         }),
     )
-admin.site.register(FlatPage, FlatPageAdmin)
+
+    list_display = ('caption', 'description', 'enabled')
+
+admin.site.register(Message, MessageAdmin)
