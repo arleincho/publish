@@ -168,7 +168,9 @@ WSGI_APPLICATION = 'publishing.wsgi.application'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-
+ALLOWED_HOSTS = [
+    '54.235.154.174'
+]
 
 
 TEMPLATE_CONTEXT_PROCESSORS = (
