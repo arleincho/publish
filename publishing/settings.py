@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'r@^=-l#vs^(-g3n0w0i(_grzz#rrtme^+6aj==ji=f$5m0ck85'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -51,10 +51,7 @@ DATABASES = {
 
 
 TIME_ZONE = 'America/Bogota'
-LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
-USE_I18N = True
-USE_L10N = True
 USE_TZ = True
 MEDIA_ROOT = ROOT_PATH + '/media/'
 MEDIA_URL = '/media/'
@@ -96,9 +93,6 @@ LANGUAGES = (
 )
 LANGUAGE_CODE = 'es'
 
-USE_I18N = True
-USE_I10N = True
-
 LOCALE_PATHS = (
     ROOT_PATH + '/locale',
 )
@@ -111,7 +105,7 @@ TEMPLATE_DIRS = (
 import djcelery
 djcelery.setup_loader()
 
-BROKER_URL = 'amqp://guest:guest@localhost:5672'
+BROKER_URL = 'librabbitmq://guest:guest@localhost:5672'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
