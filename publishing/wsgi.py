@@ -13,7 +13,7 @@ import os
 import sys
 from os.path import abspath, dirname, join
 
-ROOT_PATH = abspath(dirname(__file__))
+ROOT_PATH = abspath(dirname(dirname(__file__)))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 os.environ["DJANGO_SETTINGS_MODULE"] = "settings"

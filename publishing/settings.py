@@ -161,7 +161,7 @@ LOGGING = {
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
-ROOT_URLCONF = 'publishing.urls'
+ROOT_URLCONF = 'urls'
 
 WSGI_APPLICATION = 'publishing.wsgi.application'
 
