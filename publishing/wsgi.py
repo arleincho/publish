@@ -16,7 +16,7 @@ from os.path import abspath, dirname, join
 ROOT_PATH = abspath(dirname(__file__))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "publishing.settings")
-os.environ["DJANGO_SETTINGS_MODULE"] = "publishing.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = ROOT_PATH + "publishing.settings"
 
 if ROOT_PATH not in sys.path:
     sys.path.append(ROOT_PATH)
