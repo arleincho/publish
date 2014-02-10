@@ -40,10 +40,15 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'publishing.db'
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'alquiler_perfil',
+        'USER': 'Dj4ngoU53rD4t4b4s3',
+        'PASSWORD': 'Fvnja32QpxEZ5ppJYPmfP8umKKJGT2wH',
+        'HOST': 'localhost',
+        'PORT': '',                      # Set to empty string for default.
     }
 }
+
 
 TIME_ZONE = 'America/Bogota'
 LANGUAGE_CODE = 'en-us'
