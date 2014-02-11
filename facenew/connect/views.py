@@ -23,7 +23,7 @@ def done(request):
             cd = form.cleaned_data
             interval = IntervalSchedule.objects.get(pk=int(cd['interval']))
             message = Message.objects.get(pk=int(cd['message']))
-            task_name = slug("{0}-{1}-{2}".format(facebook.user.facebook_username interval, message.caption))
+            task_name = slug("{0}-{1}-{2}".format(facebook.user.facebook_username, interval, message.caption))
             a = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', interval=interval, args=[facebook.user.id, message.id])
             a.save()
             return render_to_response('home.html', {
