@@ -32,8 +32,8 @@ TEMPLATE_DEBUG = False
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '54.235.154.174'
-
+    '54.235.154.174',
+    'colaboradores.nwthub.co'
 ]
 
 
