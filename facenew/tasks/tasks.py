@@ -18,6 +18,6 @@ def publish(user_id, post_id):
         data = {
              "caption": message.caption.encode('utf-8'),
              "description": message.description.encode('utf-8'),
-             "picture": 'http://localhost/' + message.image.url
+             "picture": 'http://colaboradores.nethub.co/' + message.image.url
         }
         return graph.put_wall_post(message.message.encode('utf-8'), data, "me")
