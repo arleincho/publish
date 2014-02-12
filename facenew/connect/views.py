@@ -23,9 +23,7 @@ def done(request):
         form = SelectOptionForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-
-            time_interval = TIME_INTERVALS[interval] if interval in TIME_INTERVALS else {}
-
+            time_interval = TIME_INTERVALS[cd['interval']] if cd['interval'] in TIME_INTERVALS else {}
             interval = IntervalSchedule.objects.get(pk=int(time_interval['id'])) if time_interval['type'] == 'interval' else CrontabSchedule.objects.get(pk=int(time_interval['id']))
             message = Message.objects.get(pk=int(1))
             task_name = slug("{0}-{1}-{2}".format(facebook.user.facebook_username, interval, message.caption))
