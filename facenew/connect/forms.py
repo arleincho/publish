@@ -65,7 +65,7 @@ class PublishingForm(forms.Form):
 class SelectOptionForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
-        super(PublishingForm, self).__init__(*args, **kwargs)
+        super(SelectOptionForm, self).__init__(*args, **kwargs)
         self.fields['interval'].choices = [(interval, TIME_INTERVALS[interval]['text']) for interval in TIME_INTERVALS]
 
     interval = forms.ChoiceField(
