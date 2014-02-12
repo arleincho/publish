@@ -1,3 +1,4 @@
+from import_export import resources
 from django.db import models
 from facenew.utils import slug
 
