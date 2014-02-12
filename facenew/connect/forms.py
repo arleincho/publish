@@ -5,6 +5,16 @@ from facenew.tasks.models import Message
 
 from django.utils.translation import ugettext as _
 
+TIME_INTERVALS = {
+    "day_two_messages": {"text": "Dos Mensajes Diarios", "id": 1, 'type': 'interval'},
+    "a_daily_message": {"text": "Un Mensaje Diario", "id": 1, 'type': 'interval'},
+    "four_messages_a_week": {"text": "Cuatro Mensajes a La Semana", "id": 1, 'type': 'interval'},
+    "three_messages_a_week": {"text": "Tres Mensajes a La Semana", "id": 1, 'type': 'interval'},
+    "two_messages_a_week": {"text": "Dos Mensajes a La Semana", "id": 1, 'type': 'interval'},
+    "a_message_a_week": {"text": "Uno Mensaje a La Semana", "id": 1, 'type': 'interval'},
+    "one_message_one_day": {"text": "Uno Solo Mensaje (solo Un Día)", "id": 1, 'type': 'interval'},
+}
+
 class PublishingForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
@@ -49,3 +59,27 @@ class PublishingForm(forms.Form):
         required=True,
         label='Mensaje a Publicar'
     )
+
+class SelectOptionForm(forms.Form):
+
+    def __init__(self, *args, **kwargs):
+        super(PublishingForm, self).__init__(*args, **kwargs)
+        self.fields['interval'].choices = [(interval, TIME_INTERVALS[interval]['text']) for interval in TIME_INTERVALS]
+
+    interval = forms.ChoiceField(
+        required=True,
+        label='Intervalo de Tiempo'
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+
