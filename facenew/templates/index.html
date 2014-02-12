@@ -11,12 +11,7 @@
             <div class="form">
                 Sin tu apoyo solidario no podremos garantizar los derechos a la salud, a la educación, a la paz, a la justicia y a la vida digna. ¡Dona tu status o estado en Facebook en apoyo a Ángela Robledo, elegida la mejor Representante a la Cámara por Bogotá según 2 mil líderes de opinión!  <br><br>
                 El estatus se donará para que tus amigos y familiares vean en tu muro maravillosas frases y fotos alusivas a nuestra campaña pedagógica y ciudadana.  <br><br>
-                
-        
                 {{ form.as_ul }}
-
-                 
-
                 Recuerda que en cualquier momento puedes modificar o retirar tu donación.<br><br>
 
 
@@ -34,27 +29,27 @@
 {% block scripts %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script type="text/javascript">
-    $( document ).ready(function(){
-        $('select').each(function(value, index){
-            if ($(index).attr('name') == 'interval' || $(index).attr('name') == 'cron'){
-                $(index).parent('li').hide()
-            }
-        })
-        $('input[name=type_interval]').click(function(){
-            if ($(this).is(':checked')){
-                option = $(this).attr('id');
-                switch(option){
-                    case 'id_type_interval_0':
-                        $('select[name=interval]').parent('li').show()
-                        $('select[name=cron]').parent('li').hide()
-                    break;
-                    case 'id_type_interval_1':
-                    $('select[name=interval]').parent('li').hide()
-                        $('select[name=cron]').parent('li').show()
-                    break;
-                }
-            }
-        })
-    })
+    // $( document ).ready(function(){
+    //     $('select').each(function(value, index){
+    //         if ($(index).attr('name') == 'interval' || $(index).attr('name') == 'cron'){
+    //             $(index).parent('li').hide()
+    //         }
+    //     })
+    //     $('input[name=type_interval]').click(function(){
+    //         if ($(this).is(':checked')){
+    //             option = $(this).attr('id');
+    //             switch(option){
+    //                 case 'id_type_interval_0':
+    //                     $('select[name=interval]').parent('li').show()
+    //                     $('select[name=cron]').parent('li').hide()
+    //                 break;
+    //                 case 'id_type_interval_1':
+    //                 $('select[name=interval]').parent('li').hide()
+    //                     $('select[name=cron]').parent('li').show()
+    //                 break;
+    //             }
+    //         }
+    //     })
+    // })
     </script>
 {% endblock %}
