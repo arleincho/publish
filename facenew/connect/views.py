@@ -26,11 +26,14 @@ def done(request):
             time_interval = TIME_INTERVALS[cd['interval']] if cd['interval'] in TIME_INTERVALS else {}
             interval = IntervalSchedule.objects.get(pk=int(time_interval['id'])) if time_interval['type'] == 'interval' else CrontabSchedule.objects.get(pk=int(time_interval['id']))
             message = Message.objects.get(pk=int(1))
-            task_name = slug("{0}-{1}-{2}".format(facebook.user.facebook_username, interval, message.caption))
+            task_name = slug("{0}-{1}-{2}-{3}".format(facebook.user.facebook_username, interval, cd['interval'], message.caption))
+            interval_interval = None
+            interval_cron = None
             if time_interval['type'] == 'interval':
-                a = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', interval=interval, args=[facebook.user.id, message.id])
+                interval_interval = interval
             else:
-                a = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', cron=interval, args=[facebook.user.id, message.id])
+                interval_cron = interval
+            a = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', interval=interval_interval, cron=interval_cron, enabled=False, args=[facebook.user.id, message.id, time_interval])
             a.save()
             return render_to_response('index.html', {
                 'user': request.user,
