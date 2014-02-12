@@ -18,6 +18,9 @@ from Yowsup.Common.debugger import Debugger
 from Yowsup.Common.constants import Constants
 from facenew.whatsapp.ValidClient import WhatsappValidClient
 
+from django.db import close_connection
+from django.db import close_old_connections
+
 Debugger.enabled = False
 
 import facebook
