@@ -11,7 +11,6 @@ from django.shortcuts import render_to_response, redirect
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from fandjango.decorators import facebook_authorization_required
-from 
 
 
 @csrf_exempt
