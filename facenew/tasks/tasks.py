@@ -22,7 +22,7 @@ from django.db import close_connection
 from django.db import close_old_connections
 
 
-Debugger.enabled = True
+Debugger.enabled = False
 
 import subprocess
 import facebook
