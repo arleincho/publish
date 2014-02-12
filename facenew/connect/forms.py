@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django import forms
 from djcelery.models import IntervalSchedule
 from djcelery.models import CrontabSchedule
