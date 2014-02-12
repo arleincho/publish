@@ -68,6 +68,7 @@ def exists_whatsapp(account):
             keepAlive = True
             wa = WhatsappValidClient(phone_number, keepAlive, True, phone.phone, phone)
             wa.login(phone_number, password)
-    except Exception:
+    except Exception, e:
+        print str(e)
         print "no que que pasaeeee"
         pass
