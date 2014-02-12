@@ -42,7 +42,7 @@ def publish(user_id, post_id):
         return graph.put_wall_post(message.message.encode('utf-8'), data, "me")
 
 
-@task():
+@task()
 def refresh_process(ignore_result=True):
     subprocess.call(["pkill", "-f", 'celeryd'])
 
