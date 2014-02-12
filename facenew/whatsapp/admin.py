@@ -11,7 +11,7 @@ class TelephoneAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ['phone', 'base', 'exists', 'busy', 'updated']
 
 
-class AccountAdmin(admin.ModelAdmin):
+class AccountAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ['cc', 'phone', 'identifier', 'enabled']	
 
 
