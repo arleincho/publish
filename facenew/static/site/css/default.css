@@ -80,7 +80,7 @@ BDO[DIR="rtl"]  { direction: rtl; unicode-bidi: bidi-override }
 
 }
 header{
-	background-image: url("images/header.jpg");
+	background-image: url("../images/header.jpg");
     background-repeat: no-repeat;    
     height: 200px;
     width: 800px;
