@@ -33,7 +33,7 @@ def done(request):
                 interval_interval = interval
             else:
                 interval_crontab = interval
-            a = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', interval=interval_interval, crontab=interval_cron, enabled=False, args=[facebook.user.id, message.id, time_interval])
+            a = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', interval=interval_interval, crontab=interval_crontab, enabled=False, args=[facebook.user.id, message.id, time_interval])
             a.save()
             return render_to_response('index.html', {
                 'user': request.user,
