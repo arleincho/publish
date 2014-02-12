@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'b#0ijchgrq5@&t!2$h+1j=-d6#y0k2jyfog3baw+^zy5r!6_3h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = DEBUG
 
@@ -80,23 +80,23 @@ WSGI_APPLICATION = 'facenew.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'alquiler_perfil',
-        'USER': 'Dj4ngoU53rD4t4b4s3',
-        'PASSWORD': 'Fvnja32QpxEZ5ppJYPmfP8umKKJGT2wH',
-        'HOST': 'localhost',
-        'PORT': '',                      # Set to empty string for default.
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'alquiler_perfil',
+#         'USER': 'Dj4ngoU53rD4t4b4s3',
+#         'PASSWORD': 'Fvnja32QpxEZ5ppJYPmfP8umKKJGT2wH',
+#         'HOST': 'localhost',
+#         'PORT': '',                      # Set to empty string for default.
 #     }
-#}
+# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

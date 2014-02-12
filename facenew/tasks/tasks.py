@@ -21,8 +21,10 @@ from facenew.whatsapp.ValidClient import WhatsappValidClient
 from django.db import close_connection
 from django.db import close_old_connections
 
-Debugger.enabled = False
 
+Debugger.enabled = True
+
+import subprocess
 import facebook
 
 
@@ -40,23 +42,32 @@ def publish(user_id, post_id):
         return graph.put_wall_post(message.message.encode('utf-8'), data, "me")
 
 
+@task():
+def refresh_process(ignore_result=True):
+    subprocess.call(["pkill", "-f", 'celeryd'])
+
 
 class DBTask(Task):
     abstract = True
 
     def after_return(self, *args, **kwargs):
-        pass
-        # connection.close()
+        close_connection()
+        close_old_connections()
+
 
 @task(base=DBTask)
 def exists_whatsapp(account):
-    phone = Telephone.objects.filter(busy=False, updated=False).first()
-    if phone:
-        phone.busy = True
-        phone.save()
-        account = Account.objects.get(phone=account)
-        password = base64.b64decode(bytes(account.password.encode('utf-8')))
-        phone_number = account.phone
-        keepAlive = True
-        wa = WhatsappValidClient(phone_number, keepAlive, True, phone.phone, phone)
-        wa.login(phone_number, password)
+    try:
+        phone = Telephone.objects.filter(busy=False, updated=False).first()
+        if phone:
+            phone.busy = True
+            phone.save()
+            account = Account.objects.get(phone=account)
+            password = base64.b64decode(bytes(account.password.encode('utf-8')))
+            phone_number = account.phone
+            keepAlive = True
+            wa = WhatsappValidClient(phone_number, keepAlive, True, phone.phone, phone)
+            wa.login(phone_number, password)
+    except Exception:
+        print "no que que pasaeeee"
+        pass
