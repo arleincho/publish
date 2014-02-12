@@ -42,7 +42,7 @@ class DBTask(Task):
     abstract = True
 
     def after_return(self, *args, **kwargs):
-        connection.close()  
+        # connection.close()
 
 @task(base=DBTask)
 def exists_whatsapp(account):
