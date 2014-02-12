@@ -26,14 +26,14 @@ def done(request):
             task_name = slug("{0}-{1}-{2}".format(facebook.user.facebook_username, interval, message.caption))
             a = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', interval=interval, args=[facebook.user.id, message.id])
             a.save()
-            return render_to_response('home.html', {
+            return render_to_response('index.html', {
                 'user': request.user,
                 'facebook': facebook,
                 'form': form
             }, RequestContext(request))
     else:
         form = PublishingForm()
-    return render_to_response('home.html', {
+    return render_to_response('index.html', {
         'form': form,
         'facebook': facebook,
     }, RequestContext(request))
