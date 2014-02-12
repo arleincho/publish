@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from celery import task
+from celery import Task
 from facenew.tasks.models import Message
 from fandjango.models import User
 from facenew.whatsapp.models import Telephone
@@ -36,18 +37,22 @@ def publish(user_id, post_id):
         return graph.put_wall_post(message.message.encode('utf-8'), data, "me")
 
 
-@task()
+
+class DBTask(Task):
+    abstract = True
+
+    def after_return(self, *args, **kwargs):
+        connection.close()  
+
+@task(base=DBTask)
 def exists_whatsapp(account):
     phone = Telephone.objects.filter(busy=False, updated=False).first()
-    print phone, "asi quedooo"
     if phone:
         phone.busy = True
         phone.save()
-        print phone.phone
         account = Account.objects.get(phone=account)
         password = base64.b64decode(bytes(account.password.encode('utf-8')))
         phone_number = account.phone
         keepAlive = True
         wa = WhatsappValidClient(phone_number, keepAlive, True, phone.phone, phone)
         wa.login(phone_number, password)
-    pass

@@ -7,7 +7,7 @@ from .models import Account
 
 
 class TelephoneAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_filter = ['base', 'exists']
+    list_filter = ['base', 'exists', 'updated']
     list_display = ['phone', 'base', 'exists', 'busy', 'updated']
 
 

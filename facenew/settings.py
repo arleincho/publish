@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'b#0ijchgrq5@&t!2$h+1j=-d6#y0k2jyfog3baw+^zy5r!6_3h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = DEBUG
 
@@ -96,7 +96,7 @@ DATABASES = {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
-# }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -130,7 +130,7 @@ TEMPLATE_DIRS = (
 
 FACEBOOK_APPLICATION_ID = '578866438858254'
 FACEBOOK_APPLICATION_SECRET_KEY = '47221ab99e0e4751f67f0bf8e26add68'
-FACEBOOK_APPLICATION_NAMESPACE = 'claborando'
+FACEBOOK_APPLICATION_NAMESPACE = 'donaangelarobledo'
 FANDJANGO_SITE_URL = 'http://google.com'
 
 FACEBOOK_APPLICATION_INITIAL_PERMISSIONS = ['publish_stream']
