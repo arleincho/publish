@@ -42,6 +42,7 @@ class DBTask(Task):
     abstract = True
 
     def after_return(self, *args, **kwargs):
+        pass
         # connection.close()
 
 @task(base=DBTask)
