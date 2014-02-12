@@ -12,7 +12,7 @@ TIME_INTERVALS = {
     "three_messages_a_week": {"text": "Tres Mensajes a La Semana", "id": 1, 'type': 'interval'},
     "two_messages_a_week": {"text": "Dos Mensajes a La Semana", "id": 1, 'type': 'interval'},
     "a_message_a_week": {"text": "Uno Mensaje a La Semana", "id": 1, 'type': 'interval'},
-    "one_message_one_day": {"text": "Uno Solo Mensaje (solo Un Día)", "id": 1, 'type': 'interval'},
+    "one_message_one_day": {"text": u"Uno Solo Mensaje (solo Un Día)".encode('utf-8'), "id": 1, 'type': 'interval'},
 }
 
 class PublishingForm(forms.Form):

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 from facenew.connect.forms import SelectOptionForm
 from facenew.connect.forms import TIME_INTERVALS
