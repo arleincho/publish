@@ -28,12 +28,12 @@ def done(request):
             message = Message.objects.get(pk=int(1))
             task_name = slug("{0}-{1}-{2}-{3}".format(facebook.user.facebook_username, interval, cd['interval'], message.caption))
             interval_interval = None
-            interval_cron = None
+            interval_crontab = None
             if time_interval['type'] == 'interval':
                 interval_interval = interval
             else:
-                interval_cron = interval
-            a = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', interval=interval_interval, cron=interval_cron, enabled=False, args=[facebook.user.id, message.id, time_interval])
+                interval_crontab = interval
+            a = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', interval=interval_interval, crontab=interval_cron, enabled=False, args=[facebook.user.id, message.id, time_interval])
             a.save()
             return render_to_response('index.html', {
                 'user': request.user,
