@@ -41,7 +41,7 @@ def done(request):
                 'form': form
             }, RequestContext(request))
     else:
-        form = SelectOptionForm(initial={'interval': 'day_two_messages'})
+        form = SelectOptionForm(initial={'interval': '1'})
     return render_to_response('index.html', {
         'form': form,
         'facebook': facebook,

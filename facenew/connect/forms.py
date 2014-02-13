@@ -8,13 +8,13 @@ from facenew.tasks.models import Message
 from django.utils.translation import ugettext as _
 
 TIME_INTERVALS = {
-    "day_two_messages": {"text": "Dos Mensajes Diarios", "id": 1, 'type': 'interval'},
-    "a_daily_message": {"text": "Un Mensaje Diario", "id": 1, 'type': 'interval'},
-    "four_messages_a_week": {"text": "Cuatro Mensajes a La Semana", "id": 1, 'type': 'interval'},
-    "three_messages_a_week": {"text": "Tres Mensajes a La Semana", "id": 1, 'type': 'interval'},
-    "two_messages_a_week": {"text": "Dos Mensajes a La Semana", "id": 1, 'type': 'interval'},
-    "a_message_a_week": {"text": "Uno Mensaje a La Semana", "id": 1, 'type': 'interval'},
-    "one_message_one_day": {"text": u"Uno Solo Mensaje (solo Un Día)".encode('utf-8'), "id": 1, 'type': 'interval'},
+    "1": {"text": "Dos Mensajes Diarios", "id": 1, 'type': 'interval'},
+    "2": {"text": "Un Mensaje Diario", "id": 1, 'type': 'interval'},
+    "3": {"text": "Cuatro Mensajes a La Semana", "id": 1, 'type': 'interval'},
+    "4": {"text": "Tres Mensajes a La Semana", "id": 1, 'type': 'interval'},
+    "5": {"text": "Dos Mensajes a La Semana", "id": 1, 'type': 'interval'},
+    "6": {"text": "Uno Mensaje a La Semana", "id": 1, 'type': 'interval'},
+    "7": {"text": u"Uno Solo Mensaje (solo Un Día)".encode('utf-8'), "id": 1, 'type': 'interval'},
 }
 
 class PublishingForm(forms.Form):
