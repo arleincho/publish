@@ -7,15 +7,15 @@ from facenew.tasks.models import Message
 
 from django.utils.translation import ugettext as _
 
-TIME_INTERVALS = {
-    "1": {"text": "Dos Mensajes Diarios", "id": 1, 'type': 'interval'},
-    "2": {"text": "Un Mensaje Diario", "id": 1, 'type': 'interval'},
-    "3": {"text": "Cuatro Mensajes a La Semana", "id": 1, 'type': 'interval'},
-    "4": {"text": "Tres Mensajes a La Semana", "id": 1, 'type': 'interval'},
-    "5": {"text": "Dos Mensajes a La Semana", "id": 1, 'type': 'interval'},
-    "6": {"text": "Uno Mensaje a La Semana", "id": 1, 'type': 'interval'},
-    "7": {"text": u"Uno Solo Mensaje (solo Un Día)".encode('utf-8'), "id": 1, 'type': 'interval'},
-}
+TIME_INTERVALS = [
+    {"text": "Dos Mensajes Diarios", "interval_id": 1, 'type': 'interval', 'id': 1},
+    {"text": "Un Mensaje Diario", "interval_id": 1, 'type': 'interval', 'id': 2},
+    {"text": "Cuatro Mensajes a La Semana", "interval_id": 1, 'type': 'interval', 'id': 3},
+    {"text": "Tres Mensajes a La Semana", "interval_id": 1, 'type': 'interval', 'id': 4},
+    {"text": "Dos Mensajes a La Semana", "interval_id": 1, 'type': 'interval', 'id': 5},
+    {"text": "Uno Mensaje a La Semana", "interval_id": 1, 'type': 'interval', 'id': 6},
+    {"text": u"Uno Solo Mensaje (solo Un Día)".encode('utf-8'), "interval_id": 1, 'type': 'interval', 'id': 7},
+]
 
 class PublishingForm(forms.Form):
 
@@ -66,7 +66,7 @@ class SelectOptionForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(SelectOptionForm, self).__init__(*args, **kwargs)
-        self.fields['interval'].choices = [(interval, TIME_INTERVALS[interval]['text']) for interval in TIME_INTERVALS]
+        self.fields['interval'].choices = [(interval['id'], interval['text']) for interval in TIME_INTERVALS]
 
     interval = forms.ChoiceField(
         required=True,
