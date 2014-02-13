@@ -23,7 +23,7 @@ class UserCrontabScheduleAdmin(admin.ModelAdmin):
     def has_edit_permission(self, request):
         return False
 
-    def has_delete_permission(self):
+    def has_delete_permission(request):
         return False
 
     pass
