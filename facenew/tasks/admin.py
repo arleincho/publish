@@ -10,4 +10,11 @@ class MessageAdmin(admin.ModelAdmin):
 
     list_display = ('caption', 'description', 'enabled')
 
+
+
+class UserCrontabScheduleAdmin(admin.ModelAdmin):
+    pass
+
+    
 admin.site.register(Message, MessageAdmin)
+admin.site.register(UserCrontabSchedule, UserCrontabScheduleAdmin)
