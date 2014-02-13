@@ -16,7 +16,7 @@ class MessageAdmin(admin.ModelAdmin):
 
 
 class UserCrontabScheduleAdmin(admin.ModelAdmin):
-	actions = None
+    actions = None
     pass
 
     
