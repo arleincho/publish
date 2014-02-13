@@ -34,4 +34,6 @@ def done(request):
                     user_periodic_task.save()
                 return render_to_response('done.html', {'donacion': True}, RequestContext(request))
 
+        if UserCrontabSchedule.objects.filter(user_id=facebook.user.id).count():
+                return render_to_response('done.html', {}, RequestContext(request))
         return render_to_response('index.html', {}, RequestContext(request))
