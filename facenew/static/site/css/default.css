@@ -139,4 +139,5 @@ footer span{
     text-decoration:none;
     text-align:center;
     text-shadow:1px 1px 0px #cc9f52;
+    cursor: pointer;
 }
