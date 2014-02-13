@@ -27,3 +27,13 @@ class Account(models.Model):
     
     def __str__(self):
         return "{0}".format(self.phone)
+
+
+class MessagesTelephone(models.Model):
+
+    phone = models.ForeignKey(
+        Telephone, null=False, blank=False, help_text=('Telefono al que se le envia'),
+    )
+    message = models.ForeignKey(
+        Message, null=False, blank=False, help_text=('Mensaje a Enviar'), limit_choices_to={'type_message': 'watsapp'}
+    )
