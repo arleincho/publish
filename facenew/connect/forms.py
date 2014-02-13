@@ -70,7 +70,7 @@ class SelectOptionForm(forms.Form):
 
     interval = forms.ChoiceField(
         required=True,
-        label='Intervalo de Tiempo,'
+        label='Intervalo de Tiempo',
         default='day_two_messages'
     )
 
