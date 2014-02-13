@@ -27,5 +27,5 @@ class Message(models.Model):
 
 
 class UserCrontabSchedule(models.Model):
-    user = models.OneToOneField(User)
+    user = models.ForeignKey(User)
     periodic_task = models.ForeignKey(PeriodicTask, null=False)
