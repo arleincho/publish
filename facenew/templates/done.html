@@ -9,14 +9,23 @@
         <section>
             <div class="form">
             	{% if donacion %}
-                    <p>Gracias por ayudarnos a construir pais</p>
+            	    <br>
+                    <p>Gracias por tu donación!</p>
+                    <br>
+                    <p>Ya estas donando tu estatus para que tus amigos y familiares vean en tu muro maravillosas frases y fotos alusivas a nuestra campaña pedagógica y ciudadana.</p>
+                    <br>
+                    <span style="font-weight: bold"> Contigo paz haremos a la Cámara por Bogotá: Vota 101 Verde. ¡GRACIAS! </span><br>
+                {% else %}
+                    <br>
+                    <br>
+                    <p>Ya estas donando tu estatus para que tus amigos y familiares vean en tu muro maravillosas frases y fotos alusivas a nuestra campaña pedagógica y ciudadana.</p>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <input type="submit"  class="boton" value="Retirar mi donación">
+                    </form>
+                    <span style="font-weight: bold"> Contigo paz haremos a la Cámara por Bogotá: Vota 101 Verde. ¡GRACIAS! </span><br>
+                
                 {% endif %}
-                <br>
-                <p>El estatus se donará para que tus amigos y familiares vean en tu muro maravillosas frases y fotos alusivas a nuestra campaña pedagógica y ciudadana.</p><br>
-                <br><br>
-                <p>Ya estas donando tu estatus para que tus amigos y familiares vean en tu muro maravillosas frases y fotos alusivas a nuestra campaña pedagógica y ciudadana.</p>
-
-                <span style="font-weight: bold"> Contigo paz haremos a la Cámara por Bogotá: Vota 101 Verde. ¡GRACIAS! </span><br>
             </div>
 
         </section>
