@@ -22,7 +22,7 @@ def done(request):
         facebook = request.facebook
         if request.method == 'POST':
 
-            if UserCrontabSchedule.objects.filter('user_id'=facebook.user.id).first():
+            if UserCrontabSchedule.objects.filter(user_id=facebook.user.id).first():
 
                 return render_to_response('index.html', {
                     'user': request.user,
