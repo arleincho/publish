@@ -4,7 +4,7 @@ from facenew.tasks.models import Message
 class MessageAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('caption', 'description', 'message', 'image', 'enabled')
+            'fields': ('caption', 'description', 'message', 'image', 'date', 'crontab', 'enabled')
         }),
     )
 
