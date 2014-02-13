@@ -19,6 +19,6 @@ class Message(models.Model):
     enabled = models.BooleanField('enabled', default=True,)
     date = models.DateField('Fecha de envio', null=False, blank=False)
     crontab = models.ForeignKey(
-        CrontabSchedule, null=True, blank=True, verbose_name=_('crontab'),
-        help_text=_('Use one of crontab'),
+        CrontabSchedule, null=True, blank=True, verbose_name=('crontab'),
+        help_text=('Use one of crontab'),
     )
