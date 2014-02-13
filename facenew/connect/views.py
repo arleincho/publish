@@ -21,8 +21,7 @@ def done(request):
     if request.facebook.user:
         facebook = request.facebook
         if request.method == 'POST':
-
-            if UserCrontabSchedule.objects.filter(user_id=facebook.user.id).first():
+            if UserCrontabSchedule.objects.filter(user_id=facebook.user.id).count():
                 return render_to_response('done.html', {}, RequestContext(request))
             else:
                 crontabs = Message.objects.values('crontab').distinct('crontab')
@@ -34,9 +33,6 @@ def done(request):
                     periodic_task.save()
                     user_periodic_task = UserCrontabSchedule(user=facebook.user, periodic_task=periodic_task)
                     user_periodic_task.save()
-                return render_to_response('index.html', {}, RequestContext(request))
-    
+                return render_to_response('index.html', {'donacion': True}, RequestContext(request))
 
-    return render_to_response('index.html', {
-        'facebook': facebook,
-    }, RequestContext(request))
+        return render_to_response('index.html', {}, RequestContext(request))
