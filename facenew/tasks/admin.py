@@ -17,6 +17,8 @@ class MessageAdmin(admin.ModelAdmin):
 
 class UserCrontabScheduleAdmin(admin.ModelAdmin):
 
+    list_display = ('user', 'periodic_task')
+
     def has_add_permission(self, request):
         return False
 
