@@ -6,7 +6,7 @@ from facenew.tasks.models import Message
 # from djcelery.models import IntervalSchedule
 from djcelery.models import PeriodicTask
 from djcelery.models import CrontabSchedule
-from facenew.connect.models import UserCrontabSchedule
+from facenew.tasks.models import UserCrontabSchedule
 from facenew.utils import slug
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
