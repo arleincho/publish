@@ -29,4 +29,4 @@ class Message(models.Model):
 
 class UserCrontabSchedule(models.Model):
     user = models.OneToOneField(User)
-    periodic_task = models.ManyToManyField(PeriodicTask, verbose_name='periodic_task', null=True)
+    periodic_task = models.ForeignKey(PeriodicTask, null=False)
