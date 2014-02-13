@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 {% load url from future %}
 
@@ -9,17 +8,17 @@
         </header>
         <section>
             <div class="form">
-                <p>Sin tu apoyo solidario no podremos garantizar los derechos a la salud, a la educación, a la paz, a la justicia y a la vida digna. ¡Dona tu status o estado en Facebook en apoyo a Ángela Robledo, elegida la mejor Representante a la Cámara por Bogotá según 2 mil líderes de opinión!  <br><br>
+                <p>Sin tu apoyo solidario no podremos garantizar los derechos a la salud, a la educación, a la paz, a la justicia y a la vida digna. ¡Dona tu status o estado en Facebook en apoyo a Ángela Robledo, elegida la mejor Representante a la Cámara por Bogotá según 2 mil líderes de opinión!  <br>
                 El estatus se donará para que tus amigos y familiares vean en tu muro maravillosas frases y fotos alusivas a nuestra campaña pedagógica y ciudadana.</p><br><br>
                 <form action="" method="post">
                     {{ form.as_ul }}
                     {% csrf_token %}</br>
-                    <input type="submit" value="Donar mi estatus">
+                    <input type="submit"  class="boton" value="Donar mi estatus">
                 </form>
                 <br><br>
-                <p>Recuerda que en cualquier momento puedes modificar o retirar tu donación.</p><br><br>
+                <p>Recuerda que en cualquier momento puedes modificar o retirar tu donación.</p><br>
 
-                Contigo paz haremos a la Cámara por Bogotá: Vota 101 Verde. ¡GRACIAS! <br><br>
+                <span style="font-weight: bold"> Contigo paz haremos a la Cámara por Bogotá: Vota 101 Verde. ¡GRACIAS! </span><br>
             </div>
 
         </section>
