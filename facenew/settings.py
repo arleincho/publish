@@ -50,7 +50,8 @@ INSTALLED_APPS = (
     'fandjango',
     'facenew.tasks',
     'import_export',
-    'facenew.whatsapp'
+    'facenew.whatsapp',
+    'south'
 )
 
 MIDDLEWARE_CLASSES = (
