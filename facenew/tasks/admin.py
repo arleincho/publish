@@ -1,5 +1,8 @@
+
 from django.contrib import admin
 from facenew.tasks.models import Message
+from facenew.tasks.models import UserCrontabSchedule
+
 
 class MessageAdmin(admin.ModelAdmin):
     fieldsets = (
