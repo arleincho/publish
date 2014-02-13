@@ -28,7 +28,7 @@ def done(request):
                     'user': request.user,
                     'facebook': facebook
                 }, RequestContext(request))
-
+                
             else:
                 crontabs = Message.objects.values('crontab').distinct('crontab')
                 for cron in crontabs:
