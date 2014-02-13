@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from facenew.connect.forms import SelectOptionForm
-from facenew.connect.forms import TIME_INTERVALS
+# from facenew.connect.forms import SelectOptionForm
+# from facenew.connect.forms import TIME_INTERVALS
 from facenew.tasks.models import Message
-from djcelery.models import IntervalSchedule
+# from djcelery.models import IntervalSchedule
 from djcelery.models import PeriodicTask
 from djcelery.models import CrontabSchedule
+from facenew.connect.models import UserCrontabSchedule
 from facenew.utils import slug
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
@@ -19,33 +20,30 @@ from fandjango.decorators import facebook_authorization_required
 def done(request):
     if request.facebook.user:
         facebook = request.facebook
-    if request.method == 'POST':
-        form = SelectOptionForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
+        if request.method == 'POST':
 
-            time_interval = next((item for item in TIME_INTERVALS if item['id'] == cd['interval']), None)
+            if UserCrontabSchedule.objects.filter('user_id'=facebook.user.id).first():
 
-            # time_interval = TIME_INTERVALS[cd['interval']] if cd['interval'] in TIME_INTERVALS else {}
-            interval = IntervalSchedule.objects.get(pk=int(time_interval['id'])) if time_interval['type'] == 'interval' else CrontabSchedule.objects.get(pk=int(time_interval['id']))
-            message = Message.objects.get(pk=int(1))
-            task_name = slug("{0}-{1}-{2}-{3}".format(facebook.user.facebook_username, interval, cd['interval'], message.caption))
-            interval_interval = None
-            interval_crontab = None
-            if time_interval['type'] == 'interval':
-                interval_interval = interval
+                return render_to_response('index.html', {
+                    'user': request.user,
+                    'facebook': facebook
+                }, RequestContext(request))
+
             else:
-                interval_crontab = interval
-            a = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', interval=interval_interval, crontab=interval_crontab, enabled=False, args=[facebook.user.id, message.id, time_interval])
-            a.save()
-            return render_to_response('index.html', {
-                'user': request.user,
-                'facebook': facebook,
-                'form': form
-            }, RequestContext(request))
-    else:
-        form = SelectOptionForm(initial={'interval': '1'})
+                crontabs = Message.objects.values('crontab').distinct('crontab')
+                for cron in crontabs:
+                    interval_crontab = CrontabSchedule.objects.get(pk=int(crontabs.id))
+                    task_name = slug("{0}-{1}".format(facebook.user.facebook_username, interval_crontab))
+                    periodic_task = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', crontab=interval_crontab, enabled=False, args=[facebook.user.id, interval_crontab])
+                    periodic_task.save()
+                    user_periodic_task = UserCrontabSchedule(user=facebook.user, periodic_task=periodic_task)
+                    user_periodic_task.save()
+                return render_to_response('index.html', {
+                    'user': request.user,
+                    'facebook': facebook
+                }, RequestContext(request))
+    
+
     return render_to_response('index.html', {
-        'form': form,
         'facebook': facebook,
     }, RequestContext(request))
