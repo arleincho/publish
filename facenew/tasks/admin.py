@@ -16,7 +16,16 @@ class MessageAdmin(admin.ModelAdmin):
 
 
 class UserCrontabScheduleAdmin(admin.ModelAdmin):
-    actions = None
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_edit_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request):
+        return False
+
     pass
 
     
