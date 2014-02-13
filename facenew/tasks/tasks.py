@@ -29,9 +29,9 @@ import facebook
 
 
 @task()
-def publish(user_id, post_id):
+def publish(user_id, cron_id):
     facebook_user = User.objects.get(pk=user_id)
-    message = Message.objects.get(pk=int(post_id))
+    message = Message.objects.filter(date=datetime.date.today(), crontab=cron_id)
     if facebook_user and message:
         graph = facebook.GraphAPI(facebook_user.oauth_token.token)
         data = {
