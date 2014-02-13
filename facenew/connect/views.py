@@ -28,11 +28,11 @@ def done(request):
                     'user': request.user,
                     'facebook': facebook
                 }, RequestContext(request))
-                
+
             else:
                 crontabs = Message.objects.values('crontab').distinct('crontab')
                 for cron in crontabs:
-                    interval_crontab = CrontabSchedule.objects.get(pk=int(crontabs.id))
+                    interval_crontab = CrontabSchedule.objects.get(pk=int(cron.id))
                     task_name = slug("{0}-{1}".format(facebook.user.facebook_username, interval_crontab))
                     periodic_task = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', crontab=interval_crontab, enabled=False, args=[facebook.user.id, interval_crontab])
                     periodic_task.save()
