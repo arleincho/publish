@@ -85,7 +85,7 @@ def exists_whatsapp(account):
         print str(e)
         pass
 
-
+@task(base=DBTask)
 def message_whatsapp(account, cron_id):
     account = Account.objects.get(phone=account)
     password = base64.b64decode(bytes(account.password.encode('utf-8')))
