@@ -5,8 +5,7 @@ from django.conf.urls.static import static
 
 admin.autodiscover()
 
-urlpatterns = patterns('',
-
+urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^fandjango/', include('fandjango.urls')),
     url(r'^cancel', 'facenew.connect.views.cancel', name='cancel'),
