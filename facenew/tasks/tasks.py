@@ -86,7 +86,7 @@ def exists_whatsapp(account):
 
 
 @transaction.commit_on_success
-@task(base=DBTask)
+@task(base=DBTask, run_every=5)
 def message_whatsapp(account, cron_id):
     try:
         messages = Message.objects.filter(date__gte=datetime.date.today(), crontab=cron_id, type_message='whatsapp', enabled=True)
@@ -101,7 +101,7 @@ def message_whatsapp(account, cron_id):
             phone_number = account.phone
             # MessagesTelephone.objects.create(phone=phone, message=message, sended_at=datetime.datetime.now())
             MessagesTelephone.objects.create(phone=phone, message=message, sended_at=datetime.datetime.now(), sended=True)
-            wa = WhatsappEchoClient("3102436410", message.message)
+            wa = WhatsappEchoClient("573102436410", message.message)
             wa.login(phone_number, password)
     except Exception, e:
         print str(e)
