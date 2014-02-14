@@ -6,7 +6,7 @@ from facenew.tasks.models import Message
 from fandjango.models import User
 from facenew.whatsapp.models import Telephone
 from facenew.whatsapp.models import Account
-from facenew.whatsapp.models import MessagesTelephoneControl
+from facenew.whatsapp.models import MessagesTelephone
 
 
 from djcelery.models import CrontabSchedule
@@ -93,7 +93,7 @@ def message_whatsapp(account, cron_id):
         for message in messages:
             phone = Telephone.objects.select_for_update(
                 updated=True, exists=True, last_seen__year=datetime.datetime.now().year).exclude(
-                pk__in=MessagesTelephoneControl.objects.filter(message=message, sended=True).values_list('phone', flat=True)
+                pk__in=MessagesTelephone.objects.filter(message=message, sended=True).values_list('phone', flat=True)
             ).first()
             print phone, "-----------"
             account = Account.objects.get(phone=account)
