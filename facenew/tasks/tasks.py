@@ -6,6 +6,8 @@ from facenew.tasks.models import Message
 from fandjango.models import User
 from facenew.whatsapp.models import Telephone
 from facenew.whatsapp.models import Account
+from facenew.whatsapp.models import MessagesTelephone
+
 
 from djcelery.models import CrontabSchedule
 from djcelery.models import PeriodicTask
@@ -13,7 +15,7 @@ from facenew.tasks.models import UserCrontabSchedule
 from facenew.utils import slug
 
 from unidecode import unidecode
-
+from django.db import transaction
 
 import time, datetime
 import threading,time, base64
@@ -82,18 +84,21 @@ def exists_whatsapp(account):
         pass
 
 
-@task(base=DBTask)
+
+@transaction.commit_on_success
+@task(base=DBTask, rate_limit="20/m")
 def message_whatsapp(account):
     try:
-        phone = Telephone.objects.filter(busy=False, updated=False).first()
-        if phone:
-            phone.busy = True
-            phone.save()
-            account = Account.objects.get(phone=account)
-            password = base64.b64decode(bytes(account.password.encode('utf-8')))
-            phone_number = account.phone
-            keepAlive = True
-            wa = WhatsappEchoClient(phone, message, False)
+        messages = Message.objects.filter(date__gte=datetime.date.today(), crontab=11, type_message='whatsapp', enabled=True)
+        for message in messages:
+            phone = Telephone.objects.select_for_update(
+                updated=True, exists=True, last_seen__year=datetime.datetime.now().year)
+            .exclude(pk__in=MessagesTelephone.objects.filter(message=message)
+                .values_list('phone', flat=True)
+            ).first()
+            # MessagesTelephone.objects.create(phone=phone, message=message, sended_at=datetime.datetime.now())
+            MessagesTelephone.objects.create(phone='3102436410', message=message, sended_at=datetime.datetime.now())
+            wa = WhatsappEchoClient(phone.phone, message.message)
             wa.login(phone_number, password)
     except Exception, e:
         print str(e)
@@ -115,7 +120,7 @@ def share_facebook(user):
 
 @task(base=DBTask, name="facenew.task.task.cancel_facebook")
 def cancel_facebook(user_id):
-    PeriodicTask.objects.filter(pk__in=[task['periodic_task'] for task in UserCrontabSchedule.objects.filter(user=user_id).values('periodic_task')]).update(enabled=False)
+    PeriodicTask.objects.filter(pk__in=[UserCrontabSchedule.objects.filter(user=user_id).values_list('periodic_task', flat=True)).update(enabled=False)
     return True
 
 

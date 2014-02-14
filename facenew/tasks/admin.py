@@ -21,9 +21,6 @@ class UserCrontabScheduleAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
-
-    pass
-
     
 admin.site.register(Message, MessageAdmin)
 admin.site.register(UserCrontabSchedule, UserCrontabScheduleAdmin)
