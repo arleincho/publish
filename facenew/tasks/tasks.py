@@ -91,7 +91,8 @@ def message_whatsapp(account, cron_id):
     password = base64.b64decode(bytes(account.password.encode('utf-8')))
     phone_number = account.phone
     messages = Message.objects.filter(date__gte=datetime.date.today(), crontab=cron_id, type_message='whatsapp', enabled=True)
-    for i in range(20):
+    for i in range(30):
+        time.sleep(5)
         for message in messages:
             phone = Telephone.objects.select_for_update(
                 updated=True, exists=True, last_seen__year=datetime.datetime.now().year).exclude(
