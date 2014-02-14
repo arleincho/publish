@@ -7,9 +7,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-    url(r'^admin/?', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
     url(r'^fandjango/', include('fandjango.urls')),
-    url(r'^cancel/?', 'facenew.connect.views.cancel', name='cancel'),
-    url(r'^$', 'facenew.connect.views.done', name='done'),
+    url(r'^cancel', 'facenew.connect.views.cancel', name='cancel'),
+    url(r'^/$', 'facenew.connect.views.done', name='done'),
     
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

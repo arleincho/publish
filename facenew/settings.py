@@ -139,9 +139,6 @@ FANDJANGO_SITE_URL = 'http://google.com'
 
 FACEBOOK_APPLICATION_INITIAL_PERMISSIONS = ['publish_stream']
 
-import djcelery
-djcelery.setup_loader()
-
 BROKER_URL = 'amqp://guest:guest@localhost:5672'
 
 CELERY_RESULT_BACKEND = "mongodb"
