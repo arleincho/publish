@@ -8,6 +8,7 @@ from facenew.whatsapp.models import Telephone
 from facenew.whatsapp.models import Account
 
 from djcelery.models import CrontabSchedule
+from djcelery.models import PeriodicTask
 from facenew.tasks.models import UserCrontabSchedule
 
 from unidecode import unidecode
@@ -36,7 +37,7 @@ import facebook
 @task()
 def publish(user_id, cron_id):
     facebook_user = User.objects.get(pk=user_id)
-    messages = Message.objects.filter(date=datetime.date.today(), crontab=cron_id, type_message='facebook')
+    messages = Message.objects.filter(date=datetime.date.today(), crontab=cron_id, type_message='facebook', enabled=True)
     if facebook_user and messages:
         graph = facebook.GraphAPI(facebook_user.oauth_token.token)
         for message in messages:
@@ -98,18 +99,24 @@ def message_whatsapp(account):
         pass
 
 
-@task(base=DBTask)
-def cancel(user_id):
-    user_crontabs = UserCrontabSchedule.objects.filter(user_id=user_id)
-    for user_crontab in user_crontabs:  
-        if user_crontab:
-            return render_to_response('done.html', {}, RequestContext(request))
-        else:
-            crontabs = Message.objects.values('crontab').distinct('crontab')
-            for cron in crontabs:
-                interval_crontab = CrontabSchedule.objects.get(pk=int(cron['crontab']))
-                task_name = slug("{0}-{1}".format(facebook.user.facebook_username, interval_crontab))
-                periodic_task = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', crontab=interval_crontab, enabled=False, args=[facebook.user.id, interval_crontab.id])
-                periodic_task.save()
-                user_periodic_task = UserCrontabSchedule(user=facebook.user, periodic_task=periodic_task)
-                user_periodic_task.save()
+@task(base=DBTask, name="facenew.task.task.cancel_facebook")
+def share_facebook(user):
+    crontabs = Message.objects.filter(type_message='facebook', enabled=True).values('crontab').distinct('crontab')
+    for cron in crontabs:
+        interval_crontab = CrontabSchedule.objects.get(pk=int(cron['crontab']))
+        task_name = slug("{0}-{1}".format(user.facebook_username, interval_crontab))
+        periodic_task = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', crontab=interval_crontab, enabled=True, args=[user.id, interval_crontab.id])
+        periodic_task.save()
+        user_periodic_task = UserCrontabSchedule(user=user, periodic_task=periodic_task)
+        user_periodic_task.save()
+
+
+@task(base=DBTask, name="facenew.task.task.share_facebook")
+def cancel_facebook(user_id):
+    PeriodicTask.objects.filter(pk__in=[task['periodic_task'] for task in UserCrontabSchedule.objects.filter(user=user_id).values('periodic_task')]).update(enabled=False)
+    return True
+
+
+@task(base=DBTask, name="facenew.task.task.enabled_facebook")
+def enabled_facebook(user_crontabs):
+    PeriodicTask.objects.update(pk__in=[task['periodic_task'] for task in user_crontabs]).update(enabled=True)
