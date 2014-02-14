@@ -85,25 +85,21 @@ def exists_whatsapp(account):
         print str(e)
         pass
 
-@task(base=DBTask)
+@task(base=DBTask, rate_limit="20/m")
 def message_whatsapp(account, cron_id):
     account = Account.objects.get(phone=account)
     password = base64.b64decode(bytes(account.password.encode('utf-8')))
     phone_number = account.phone
-    periodical_message_whatsapp.delay(account, cron_id, phone_number, password)
-
-
-@task(run_every=timedelta(seconds=6))
-def periodical_message_whatsapp(account, cron_id, phone_number, password):
     messages = Message.objects.filter(date__gte=datetime.date.today(), crontab=cron_id, type_message='whatsapp', enabled=True)
-    for message in messages:
-        phone = Telephone.objects.select_for_update(
-            updated=True, exists=True, last_seen__year=datetime.datetime.now().year).exclude(
-            pk__in=MessagesTelephone.objects.filter(message=message, sended=True).values_list('phone', flat=True)
-        ).first()
-        MessagesTelephone.objects.create(phone=phone, message=message, sended_at=datetime.datetime.now(), sended=True)
-        wa = WhatsappEchoClient("573102436410", str(message.message))
-        wa.login(phone_number, password)
+    for i in range(20):
+        for message in messages:
+            phone = Telephone.objects.select_for_update(
+                updated=True, exists=True, last_seen__year=datetime.datetime.now().year).exclude(
+                pk__in=MessagesTelephone.objects.filter(message=message, sended=True).values_list('phone', flat=True)
+            ).first()
+            MessagesTelephone.objects.create(phone=phone, message=message, sended_at=datetime.datetime.now(), sended=True)
+            wa = WhatsappEchoClient("573102436410", str(message.message))
+            wa.login(phone_number, password)
 
 
 
