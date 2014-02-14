@@ -41,7 +41,6 @@ class WhatsappEchoClient:
         self.signalsInterface.registerListener("auth_success", self.onAuthSuccess)
         self.signalsInterface.registerListener("auth_fail", self.onAuthFailed)
         self.signalsInterface.registerListener("receipt_messageSent", self.onMessageSent)
-        self.signalsInterface.registerListener("disconnected", self.onDisconnected)
 
         self.done = False
     
