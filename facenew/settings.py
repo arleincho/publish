@@ -105,7 +105,7 @@ djcelery.setup_loader()
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 USE_TZ = True
 TIME_ZONE = 'America/Bogota'
-CELERY_TIMEZONE = TIME_ZONE
+CELERY_TIMEZONE = 'America/Bogota'
 CELERY_ENABLE_UTC = False
 USE_I18N = True
 USE_L10N = True
