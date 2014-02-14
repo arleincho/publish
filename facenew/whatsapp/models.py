@@ -38,4 +38,4 @@ class MessagesTelephone(models.Model):
         Message, null=False, blank=False, help_text=('Mensaje a Enviar'), limit_choices_to={'type_message': 'watsapp'}
     )
     sended = models.BooleanField('Enviado', default=True)
-    sended_at = models.DateTimeField('Fecha del envio')
+    sended_at = models.DateTimeField('Fecha del envio', auto_now=True, null=True, default=None)
