@@ -22,7 +22,7 @@ caption         { display: table-caption }
 th              { font-weight: bolder; text-align: center }
 caption         { text-align: center }
 body            { margin: 8px; font-family: arial;}
-
+a 		{ text-decoration: none;}
 h2              { font-size: 1.5em; margin: .75em 0 }
 h3              { font-size: 1.17em; margin: .83em 0 }
 h4, p,
@@ -139,4 +139,5 @@ footer span{
     text-decoration:none;
     text-align:center;
     text-shadow:1px 1px 0px #cc9f52;
+    cursor: pointer;
 }

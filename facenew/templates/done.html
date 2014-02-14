@@ -10,6 +10,8 @@
             <div class="form">
             	{% if donacion %}
             	    <br>
+            	    <p><a href="https://www.facebook.com/angelamrobledo" target="_parent">Ir a la página Facebook de Angela Robledo.</a></p>
+            	    <br>
                     <p>Gracias por tu donación!</p>
                     <br>
                     <p>Ya estas donando tu estatus para que tus amigos y familiares vean en tu muro maravillosas frases y fotos alusivas a nuestra campaña pedagógica y ciudadana.</p>
@@ -17,12 +19,13 @@
                     <span style="font-weight: bold"> Contigo paz haremos a la Cámara por Bogotá: Vota 101 Verde. ¡GRACIAS! </span><br>
                 {% else %}
                     <br>
-                    <br>
                     <p>Ya estas donando tu estatus para que tus amigos y familiares vean en tu muro maravillosas frases y fotos alusivas a nuestra campaña pedagógica y ciudadana.</p>
+                    <br>
                     <form action="cancel" method="post">
                         {% csrf_token %}
                         <input type="submit"  class="boton" value="Retirar mi donación">
                     </form>
+                    <br>
                     <span style="font-weight: bold"> Contigo paz haremos a la Cámara por Bogotá: Vota 101 Verde. ¡GRACIAS! </span><br>
                 {% endif %}
             </div>
