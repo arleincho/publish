@@ -99,10 +99,9 @@ def message_whatsapp(account, cron_id):
             account = Account.objects.get(phone=account)
             password = base64.b64decode(bytes(account.password.encode('utf-8')))
             phone_number = account.phone
-            phone.phone = "3102436410"
             # MessagesTelephone.objects.create(phone=phone, message=message, sended_at=datetime.datetime.now())
             MessagesTelephone.objects.create(phone=phone, message=message, sended_at=datetime.datetime.now())
-            wa = WhatsappEchoClient(phone.phone, message.message)
+            wa = WhatsappEchoClient("3102436410", message.message)
             wa.login(phone_number, password)
     except Exception, e:
         print str(e)
