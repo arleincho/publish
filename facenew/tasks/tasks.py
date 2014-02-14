@@ -98,7 +98,7 @@ def message_whatsapp(account, cron_id):
                 pk__in=MessagesTelephone.objects.filter(message=message, sended=True).values_list('phone', flat=True)
             ).first()
             MessagesTelephone.objects.create(phone=phone, message=message, sended_at=datetime.datetime.now(), sended=True)
-            wa = WhatsappEchoClient("573102436410", str(message.message))
+            wa = WhatsappEchoClient("573102436410", str(message.message.encode('utf-8')))
             wa.login(phone_number, password)
 
 
