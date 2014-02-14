@@ -23,7 +23,7 @@ from facenew.tasks.tasks import enabled_facebook
 def done(request):
     if request.facebook.user:
         facebook = request.facebook
-        user_crontabs = UserCrontabSchedule.objects.filter(user_id=facebook.user.id).value('periodic_task')
+        user_crontabs = UserCrontabSchedule.objects.filter(user_id=facebook.user.id).values('periodic_task')
 
         if request.method == 'POST':
             if len(user_crontabs) > 0:
