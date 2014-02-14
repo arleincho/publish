@@ -7,7 +7,7 @@ from facenew.tasks.models import UserCrontabSchedule
 class MessageAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('caption', 'description', 'message', 'image', 'date', 'crontab', 'enabled')
+            'fields': ('caption', 'description', 'message', 'link', 'image', 'date', 'crontab', 'enabled')
         }),
     )
 
