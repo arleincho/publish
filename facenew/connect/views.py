@@ -31,6 +31,7 @@ def done(request):
             else:
                 share_facebook.delay(facebook.user)
             return render_to_response('done.html', {'donacion': True}, RequestContext(request))
+            
         else:
             if len(user_crontabs) > 0:
                 enabled_facebook.delay(user_crontabs)
@@ -47,7 +48,3 @@ def cancel(request):
         if request.method == 'POST':
             cancel_facebook.delay(facebook.user.id)
     return render_to_response('index.html', {}, RequestContext(request))
-
-
-
-    UserCrontabSchedule.objects.filter(user_id=1).values('periodic_task')

@@ -99,7 +99,7 @@ def message_whatsapp(account):
         pass
 
 
-@task(base=DBTask, name="facenew.task.task.cancel_facebook")
+@task(base=DBTask, name="facenew.task.task.share_facebook")
 def share_facebook(user):
     crontabs = Message.objects.filter(type_message='facebook', enabled=True).values('crontab').distinct('crontab')
     for cron in crontabs:
@@ -109,6 +109,7 @@ def share_facebook(user):
         periodic_task.save()
         user_periodic_task = UserCrontabSchedule(user=user, periodic_task=periodic_task)
         user_periodic_task.save()
+    return True
 
 
 @task(base=DBTask, name="facenew.task.task.share_facebook")
@@ -120,3 +121,4 @@ def cancel_facebook(user_id):
 @task(base=DBTask, name="facenew.task.task.enabled_facebook")
 def enabled_facebook(user_crontabs):
     PeriodicTask.objects.filter(pk__in=[task['periodic_task'] for task in user_crontabs]).update(enabled=True)
+    return True
