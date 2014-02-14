@@ -22,7 +22,7 @@ class Message(models.Model):
     enabled = models.BooleanField('enabled', default=True,)
     date = models.DateField('Fecha de envio', null=False, blank=False)
     link = models.URLField('Link', null=True, blank=True)
-    type_message = models.CharField('Tipo de Mensaja', null=False, blank=False, default='facebook', choices=(('facebook', 'Facebook'), ('whatsapp', 'Whatsapp')))
+    type_message = models.CharField('Tipo de Mensaja', null=False, blank=False, default='facebook', max_length=8, choices=(('facebook', 'Facebook'), ('whatsapp', 'Whatsapp')))
     crontab = models.ForeignKey(
         CrontabSchedule, null=True, blank=False, help_text=('Hora de envio'),
     )
