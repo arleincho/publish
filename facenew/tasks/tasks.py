@@ -96,6 +96,7 @@ def message_whatsapp(account, cron_id):
             .exclude(pk__in=MessagesTelephone.objects.filter(message=message)
                 .values_list('phone', flat=True)
             ).first()
+            print phone, "-----------"
             account = Account.objects.get(phone=account)
             password = base64.b64decode(bytes(account.password.encode('utf-8')))
             phone_number = account.phone
