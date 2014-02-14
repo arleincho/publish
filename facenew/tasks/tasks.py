@@ -85,11 +85,11 @@ def exists_whatsapp(account):
 
 
 @task(base=DBTask)
-@transaction.commit_manually
 def message_whatsapp(account, cron_id):
     return [tmp_message_whatsapp(account, cron_id) for i in range(10)]
 
 
+@transaction.commit_manually
 @task(base=DBTask)
 def tmp_message_whatsapp(account, cron_id):
     try:
