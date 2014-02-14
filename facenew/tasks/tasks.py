@@ -85,33 +85,25 @@ def exists_whatsapp(account):
 
 
 @task(base=DBTask)
-def message_whatsapp(account, cron_id):
-    return [tmp_message_whatsapp(account, cron_id) for i in range(10)]
-
-
-@transaction.commit_manually
-@task(base=DBTask)
-def tmp_message_whatsapp(account, cron_id):
-    try:
+def message_whatsapp(account, cron_id, run_every=timedelta(seconds=30)):
+        account = Account.objects.get(phone=account)
+        password = base64.b64decode(bytes(account.password.encode('utf-8')))
+        phone_number = account.phone
         messages = Message.objects.filter(date__gte=datetime.date.today(), crontab=cron_id, type_message='whatsapp', enabled=True)
         for message in messages:
             phone = Telephone.objects.select_for_update(
                 updated=True, exists=True, last_seen__year=datetime.datetime.now().year).exclude(
                 pk__in=MessagesTelephone.objects.filter(message=message, sended=True).values_list('phone', flat=True)
             ).first()
-            print phone, "-----------"
-            account = Account.objects.get(phone=account)
-            password = base64.b64decode(bytes(account.password.encode('utf-8')))
-            phone_number = account.phone
-            # MessagesTelephone.objects.create(phone=phone, message=message, sended_at=datetime.datetime.now())
             MessagesTelephone.objects.create(phone=phone, message=message, sended_at=datetime.datetime.now(), sended=True)
-            transaction.commit()
-            wa = WhatsappEchoClient("573102436410", str(message.message))
-            wa.login(phone_number, password)
-    except Exception, e:
-        transaction.rollback()
-        print str(e)
-        pass
+            tmp_message_whatsapp(account, cron_id, account, password, '573102436410')
+
+
+@task(base=DBTask, ignore_result=True)
+def tmp_message_whatsapp(account, cron_id, account, password):
+    try:
+        wa = WhatsappEchoClient("573102436410", str(message.message))
+        wa.login(phone_number, password)
 
 
 @task(base=DBTask, name="facenew.task.task.share_facebook")
