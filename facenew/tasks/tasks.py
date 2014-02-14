@@ -87,7 +87,7 @@ def exists_whatsapp(account):
 
 @task(base=DBTask, rate_limit="20/m")
 def message_whatsapp(account, cron_id):
-    account = Account.objects.get(phone=account)
+    account = Account.objects.get(phone=account, enabled=True)
     password = base64.b64decode(bytes(account.password.encode('utf-8')))
     phone_number = account.phone
     messages = Message.objects.filter(date__gte=datetime.date.today(), crontab=cron_id, type_message='whatsapp', enabled=True)
