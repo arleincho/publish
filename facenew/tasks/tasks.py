@@ -86,7 +86,7 @@ def exists_whatsapp(account):
 
 
 @transaction.commit_on_success
-@task(base=DBTask, rate_limit="20/m")
+@task(base=DBTask)
 def message_whatsapp(account, cron_id):
     try:
         messages = Message.objects.filter(date__gte=datetime.date.today(), crontab=cron_id, type_message='whatsapp', enabled=True)
