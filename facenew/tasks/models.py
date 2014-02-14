@@ -27,6 +27,9 @@ class Message(models.Model):
         CrontabSchedule, null=True, blank=False, help_text=('Hora de envio'),
     )
 
+    def __unicode__(self):
+        return '<Message: {0.message_id} caption={0.caption}>'.format(self)
+
 
 class UserCrontabSchedule(models.Model):
     user = models.ForeignKey(User)
