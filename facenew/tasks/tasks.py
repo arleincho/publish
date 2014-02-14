@@ -119,4 +119,4 @@ def cancel_facebook(user_id):
 
 @task(base=DBTask, name="facenew.task.task.enabled_facebook")
 def enabled_facebook(user_crontabs):
-    PeriodicTask.objects.update(pk__in=[task['periodic_task'] for task in user_crontabs]).update(enabled=True)
+    PeriodicTask.objects.filter(pk__in=[task['periodic_task'] for task in user_crontabs]).update(enabled=True)
