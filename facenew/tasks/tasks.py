@@ -10,6 +10,7 @@ from facenew.whatsapp.models import Account
 from djcelery.models import CrontabSchedule
 from djcelery.models import PeriodicTask
 from facenew.tasks.models import UserCrontabSchedule
+from facenew.utils import slug
 
 from unidecode import unidecode
 

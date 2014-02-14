@@ -7,7 +7,6 @@ from facenew.tasks.models import Message
 from djcelery.models import PeriodicTask
 from djcelery.models import CrontabSchedule
 from facenew.tasks.models import UserCrontabSchedule
-from facenew.utils import slug
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from django.conf import settings
@@ -31,7 +30,7 @@ def done(request):
             else:
                 share_facebook.delay(facebook.user)
             return render_to_response('done.html', {'donacion': True}, RequestContext(request))
-            
+
         else:
             if len(user_crontabs) > 0:
                 enabled_facebook.delay(user_crontabs)
