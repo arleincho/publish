@@ -11,7 +11,7 @@ class MessageAdmin(admin.ModelAdmin):
         }),
     )
 
-    list_display = ('caption', 'description', 'enabled', 'date', 'crontab')
+    list_display = ('caption', 'description', 'type_message', 'enabled', 'date', 'crontab')
 
 
 
