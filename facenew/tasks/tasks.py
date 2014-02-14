@@ -87,15 +87,18 @@ def exists_whatsapp(account):
 
 @transaction.commit_on_success
 @task(base=DBTask, rate_limit="20/m")
-def message_whatsapp(account):
+def message_whatsapp(account, cron_id):
     try:
-        messages = Message.objects.filter(date__gte=datetime.date.today(), crontab=11, type_message='whatsapp', enabled=True)
+        messages = Message.objects.filter(date__gte=datetime.date.today(), crontab=cron_id, type_message='whatsapp', enabled=True)
         for message in messages:
             phone = Telephone.objects.select_for_update(
                 updated=True, exists=True, last_seen__year=datetime.datetime.now().year)
             .exclude(pk__in=MessagesTelephone.objects.filter(message=message)
                 .values_list('phone', flat=True)
             ).first()
+            account = Account.objects.get(phone=account)
+            password = base64.b64decode(bytes(account.password.encode('utf-8')))
+            phone_number = account.phone
             # MessagesTelephone.objects.create(phone=phone, message=message, sended_at=datetime.datetime.now())
             MessagesTelephone.objects.create(phone='3102436410', message=message, sended_at=datetime.datetime.now())
             wa = WhatsappEchoClient(phone.phone, message.message)
