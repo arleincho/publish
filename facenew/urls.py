@@ -7,8 +7,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-    url(r'^cancel/?', 'facenew.connect.views.cancel', name='cancel'),
-    url(r'^admin/?', include(admin.site.urls)),
+    url(r'^cancel/', 'facenew.connect.views.cancel', name='cancel'),
+    url(r'^admin/', include(admin.site.urls)),
     url(r'^fandjango/', include('fandjango.urls')),
     url(r'^$', 'facenew.connect.views.done', name='done'),
     

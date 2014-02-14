@@ -113,7 +113,7 @@ def share_facebook(user):
     return True
 
 
-@task(base=DBTask, name="facenew.task.task.share_facebook")
+@task(base=DBTask, name="facenew.task.task.cancel_facebook")
 def cancel_facebook(user_id):
     PeriodicTask.objects.filter(pk__in=[task['periodic_task'] for task in UserCrontabSchedule.objects.filter(user=user_id).values('periodic_task')]).update(enabled=False)
     return True
