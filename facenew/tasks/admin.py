@@ -2,6 +2,7 @@
 from django.contrib import admin
 from facenew.tasks.models import Message
 from facenew.tasks.models import UserCrontabSchedule
+from facenew.whatsapp.models import MessagesTelephone
 
 
 class MessageAdmin(admin.ModelAdmin):
@@ -21,6 +22,14 @@ class UserCrontabScheduleAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
-    
+
+class MessagesTelephoneAdmin(admin.ModelAdmin):
+
+    list_display = ('phone', 'message', 'sended', 'sended_at')
+
+    def has_add_permission(self, request):
+        return False
+
+admin.site.register(MessagesTelephone, MessagesTelephoneAdmin)
 admin.site.register(Message, MessageAdmin)
 admin.site.register(UserCrontabSchedule, UserCrontabScheduleAdmin)
