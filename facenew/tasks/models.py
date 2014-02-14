@@ -28,7 +28,7 @@ class Message(models.Model):
     )
 
     def __unicode__(self):
-        return '<Message: caption={0.caption}>'.format(self)
+        return '<Message: caption={0}>'.format(self.caption.encode('utf-8'))
 
 
 class UserCrontabSchedule(models.Model):
