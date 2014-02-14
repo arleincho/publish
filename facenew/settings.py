@@ -99,6 +99,8 @@ DATABASES = {
 #     }
 # }
 
+import djcelery
+djcelery.setup_loader()
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 USE_TZ = True
