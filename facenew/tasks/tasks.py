@@ -18,6 +18,7 @@ from unidecode import unidecode
 from django.db import transaction
 
 import time, datetime
+from datetime import timedelta
 import threading,time, base64
 
 from Yowsup.connectionmanager import YowsupConnectionManager
@@ -84,8 +85,8 @@ def exists_whatsapp(account):
         pass
 
 
-@task(base=DBTask)
-def message_whatsapp(account, cron_id, run_every=timedelta(seconds=30)):
+@periodic_task(run_every=timedelta(seconds=6))
+def message_whatsapp(account, cron_id):
         account = Account.objects.get(phone=account)
         password = base64.b64decode(bytes(account.password.encode('utf-8')))
         phone_number = account.phone
@@ -96,15 +97,8 @@ def message_whatsapp(account, cron_id, run_every=timedelta(seconds=30)):
                 pk__in=MessagesTelephone.objects.filter(message=message, sended=True).values_list('phone', flat=True)
             ).first()
             MessagesTelephone.objects.create(phone=phone, message=message, sended_at=datetime.datetime.now(), sended=True)
-            tmp_message_whatsapp(account, cron_id, account, password, '573102436410')
-
-
-@task(base=DBTask, ignore_result=True)
-def tmp_message_whatsapp(account, cron_id, account, password):
-    try:
-        wa = WhatsappEchoClient("573102436410", str(message.message))
-        wa.login(phone_number, password)
-
+            wa = WhatsappEchoClient("573102436410", str(message.message))
+            wa.login(phone_number, password)
 
 @task(base=DBTask, name="facenew.task.task.share_facebook")
 def share_facebook(user):
