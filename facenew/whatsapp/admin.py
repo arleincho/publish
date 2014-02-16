@@ -20,7 +20,7 @@ class AccountAdmin(ImportExportMixin, admin.ModelAdmin):
 
 class MessagesPhoneWhatsappAdmin(admin.ModelAdmin):
 
-    list_display = ('phone', 'message', 'sended', 'sended_at')
+    list_display = ('phone', 'message', 'message_whatsapp_id', 'sended', 'sended_at')
 
     def has_add_permission(self, request):
         return False
