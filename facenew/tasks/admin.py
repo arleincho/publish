@@ -2,7 +2,7 @@
 from django.contrib import admin
 from facenew.tasks.models import Message
 from facenew.tasks.models import UserCrontabSchedule
-from facenew.whatsapp.models import MessagesTelephone
+from facenew.whatsapp.models import MessagesPhoneWhatsapp
 
 
 class MessageAdmin(admin.ModelAdmin):
@@ -16,7 +16,7 @@ class MessageAdmin(admin.ModelAdmin):
 
 
 
-class UserCrontabScheduleAdmin(admin.ModelAdmin):
+class MessagesPhoneWhatsappAdmin(admin.ModelAdmin):
 
     list_display = ('user', 'periodic_task')
 
@@ -30,6 +30,6 @@ class MessagesTelephoneAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False
 
-admin.site.register(MessagesTelephone, MessagesTelephoneAdmin)
+admin.site.register(MessagesPhoneWhatsapp, MessagesPhoneWhatsappAdmin)
 admin.site.register(Message, MessageAdmin)
 admin.site.register(UserCrontabSchedule, UserCrontabScheduleAdmin)
