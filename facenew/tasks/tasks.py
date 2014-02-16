@@ -111,7 +111,7 @@ def launch_messege_whatsapp(account, cron_id):
     account = Account.objects.get(phone=account, enabled=True)
     password = base64.b64decode(bytes(account.password.encode('utf-8')))
     phone_number = account.phone
-    message = Message.objects.filter(crontab=cron_id, type_message='whatsapp', enabled=True).first()
+    message = Message.objects.filter(date__lte=datetime.date.today(), crontab=cron_id, type_message='whatsapp', enabled=True).first()
     scheduler = sched.scheduler(time.time, time.sleep)
     periodic(scheduler, count, {'stop': step, 'step': 1}, current_app.send_task,
         ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
