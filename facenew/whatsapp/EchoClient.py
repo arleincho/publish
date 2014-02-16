@@ -23,6 +23,7 @@ import os
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0,parentdir)
 import time
+import datetime
 
 from Yowsup.connectionmanager import YowsupConnectionManager
 
@@ -61,7 +62,11 @@ class WhatsappEchoClient:
         self.done = True
 
     def onMessageSent(self, jid, msgId):
-        object_message_whatsapp.message_whatsapp_id = msgId
-        object_message_whatsapp.save()
+        try:
+            self.object_message_whatsapp.message_whatsapp_id = msgId
+            self.object_message_whatsapp.sended_at = datetime.datetime.now()
+            self.object_message_whatsapp.save()
+        except Exception:
+            pass
         self.methodsInterface.call("disconnect")
         self.done = True

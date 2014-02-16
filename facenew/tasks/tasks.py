@@ -99,9 +99,9 @@ def message_whatsapp(account, cron_id):
             exists=True, updated=True, last_seen__year=datetime.datetime.now().year).exclude(
             pk__in=MessagesPhoneWhatsapp.objects.filter(message=message, sended=True).values_list('phone', flat=True)
         ).first()
-        messages_phone_whatsapp = MessagesPhoneWhatsapp.objects.create(phone=phone, message=message, sended_at=datetime.datetime.now(), sended=True)
+        message_phone_whatsapp = MessagesPhoneWhatsapp.objects.create(phone=phone, message=message)
         # wa = WhatsappEchoClient(phone.phone, message.message.encode('utf-8'))
-        wa = WhatsappEchoClient('573102436410', message.message.encode('utf-8'), False, messages_phone_whatsapp)
+        wa = WhatsappEchoClient('573102436410', message.message.encode('utf-8'), False, message_phone_whatsapp)
         wa.login(phone_number, password)
 
 
