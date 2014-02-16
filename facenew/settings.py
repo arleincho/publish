@@ -106,7 +106,7 @@ djcelery.setup_loader()
 USE_TZ = True
 TIME_ZONE = 'America/Bogota'
 CELERY_TIMEZONE = 'America/Bogota'
-CELERY_ENABLE_UTC = False
+CELERY_ENABLE_UTC = True
 USE_I18N = True
 USE_L10N = True
 LANGUAGES = (
