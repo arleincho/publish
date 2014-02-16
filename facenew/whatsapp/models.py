@@ -32,7 +32,7 @@ class Account(models.Model):
 class MessagesTelephoneDos(models.Model):
 
     phone = models.ForeignKey(
-        Telephone, null=False, blank=False, help_text=('Telefono al que se le envia'),
+        TelephoneDos, null=False, blank=False, help_text=('Telefono al que se le envia'),
     )
     message_com = models.ForeignKey(
         Message, null=False, blank=False, help_text=('Mensaje a Enviar')
