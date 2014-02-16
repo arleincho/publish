@@ -34,7 +34,7 @@ class MessagesTelephone(models.Model):
     phone = models.ForeignKey(
         Telephone, null=False, blank=False, help_text=('Telefono al que se le envia'),
     )
-    message_com = models.ForeignKey(
+    message = models.ForeignKey(
         Message, null=False, blank=False, help_text=('Mensaje a Enviar')
     )
     message_whatsapp_id = models.CharField(max_length=20, null=True)
