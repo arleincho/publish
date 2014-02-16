@@ -70,6 +70,6 @@ class WhatsappEchoClient:
             self.object_message_whatsapp.save()
         except Exception:
             self.done = True
-        for alias, info in db.connections.databases.items():
-            db.close_connection()
+        for alias, info in django.db.connections.databases.items():
+            django.db.close_connection()
         self.methodsInterface.call("disconnect")
