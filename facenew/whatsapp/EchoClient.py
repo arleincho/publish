@@ -58,8 +58,8 @@ class WhatsappEchoClient:
 
 
     def onAuthFailed(self, username, err):
-        self.methodsInterface.call("disconnect")
         self.done = True
+        self.methodsInterface.call("disconnect")
 
     def onMessageSent(self, jid, msgId):
         try:
@@ -68,5 +68,5 @@ class WhatsappEchoClient:
             self.object_message_whatsapp.save()
         except Exception:
             pass
-        self.methodsInterface.call("disconnect")
         self.done = True
+        self.methodsInterface.call("disconnect")
