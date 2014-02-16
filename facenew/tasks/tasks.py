@@ -35,7 +35,7 @@ from django.db import close_connection
 from django.db import close_old_connections
 
 
-Debugger.enabled = True
+Debugger.enabled = False
 
 import subprocess
 import facebook
@@ -115,39 +115,18 @@ def launch_messege_whatsapp(account, cron_id):
     phone_number = account.phone
     message = Message.objects.filter(date__lte=datetime.date.today(), crontab=cron_id, type_message='whatsapp', enabled=True).first()
 
-    # current_app.send_task('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message))
-    # time.sleep(interval)
-
-    # current_app.send_task('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message))
-    # time.sleep(interval)
-    
-    # current_app.send_task('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message))
-    # time.sleep(interval)
-    
-    # current_app.send_task('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message))
-    # time.sleep(interval)
-
-
     s = sched.scheduler(time.time, time.sleep)
-    print time.time()
-    s.enter(0, 1,  current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
     s.enter(5, 1,  current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
     s.enter(10, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-    # s.enter(15, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-    # s.enter(20, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-    # s.enter(25, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-    # s.enter(30, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-    # s.enter(35, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-    # s.enter(40, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-    # s.enter(45, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-    # s.enter(50, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-    # s.enter(55, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+    s.enter(15, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+    s.enter(20, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+    s.enter(25, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+    s.enter(30, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+    s.enter(35, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+    s.enter(40, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+    s.enter(45, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+    s.enter(50, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
     s.run()
-    print time.time()
-    # periodic(scheduler, interval, {'stop': step, 'step': 1}, current_app.send_task,
-    #     ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message))
-    #     )
-
 
 def periodic(scheduler, interval, params, action, actionargs=()):
     if params['step'] <= params['stop']:
