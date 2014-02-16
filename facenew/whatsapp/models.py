@@ -37,6 +37,6 @@ class MessagesTelephone(models.Model):
     message = models.ForeignKey(
         Message, null=False, blank=False, help_text=('Mensaje a Enviar')
     )
-    message_id = models.CharField(max_length=20, null=True)
+    message_whatsapp_id = models.CharField(max_length=20, null=True)
     sended = models.BooleanField('Enviado', default=True)
     sended_at = models.DateTimeField('Fecha del envio', auto_now=True, null=True, default=None)
