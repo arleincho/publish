@@ -65,7 +65,7 @@ def refresh_process(ignore_result=True):
 class DBTask(Task):
     abstract = True
 
-    def after_return(self, *args, **kwargs):
+    # def after_return(self, *args, **kwargs):
         # close_connection()
         # close_old_connections()
 
