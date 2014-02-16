@@ -66,8 +66,8 @@ class DBTask(Task):
     abstract = True
 
     def after_return(self, *args, **kwargs):
-        close_connection()
-        close_old_connections()
+        # close_connection()
+        # close_old_connections()
 
 
 @task(base=DBTask)
@@ -130,6 +130,7 @@ def launch_messege_whatsapp(account, cron_id):
 
     s = sched.scheduler(time.time, time.sleep)
     print time.time()
+    s.enter(0, 1,  current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
     s.enter(5, 1,  current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
     s.enter(10, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
     s.enter(15, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
