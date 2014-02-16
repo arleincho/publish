@@ -25,7 +25,7 @@ os.sys.path.insert(0,parentdir)
 import time
 import datetime
 
-from django.db
+import django.db
 
 from Yowsup.connectionmanager import YowsupConnectionManager
 
