@@ -88,21 +88,25 @@ def exists_whatsapp(account):
 
 # @task(base=DBTask)
 @periodic_task(run_every=datetime.timedelta(minutes=4))
-@transaction.commit_on_success
+@transaction.commit_manually
 def message_whatsapp(account, cron_id):
-    account = Account.objects.get(phone=account, enabled=True)
-    password = base64.b64decode(bytes(account.password.encode('utf-8')))
-    phone_number = account.phone
-    messages = Message.objects.filter(crontab=cron_id, type_message='whatsapp', enabled=True)
-    for message in messages:
-        phone = Telephone.objects.select_for_update(
-            exists=True, updated=True, last_seen__year=datetime.datetime.now().year).exclude(
-            pk__in=MessagesPhoneWhatsapp.objects.filter(message=message, sended=True).values_list('phone', flat=True)
-        ).first()
-        message_phone_whatsapp = MessagesPhoneWhatsapp.objects.create(phone=phone, message=message)
-        # wa = WhatsappEchoClient(phone.phone, message.message.encode('utf-8'))
-        wa = WhatsappEchoClient('573102436410', message.message.encode('utf-8'), False, message_phone_whatsapp)
-        wa.login(phone_number, password)
+    try:
+        account = Account.objects.get(phone=account, enabled=True)
+        password = base64.b64decode(bytes(account.password.encode('utf-8')))
+        phone_number = account.phone
+        messages = Message.objects.filter(crontab=cron_id, type_message='whatsapp', enabled=True)
+        for message in messages:
+            phone = Telephone.objects.select_for_update(
+                exists=True, updated=True, last_seen__year=datetime.datetime.now().year).exclude(
+                pk__in=MessagesPhoneWhatsapp.objects.filter(message=message, sended=True).values_list('phone', flat=True)
+            ).first()
+            message_phone_whatsapp = MessagesPhoneWhatsapp.objects.create(phone=phone, message=message)
+            transaction.commit()
+            # wa = WhatsappEchoClient(phone.phone, message.message.encode('utf-8'))
+            wa = WhatsappEchoClient('573102436410', message.message.encode('utf-8'), False, message_phone_whatsapp)
+            wa.login(phone_number, password)
+    except Exception:
+        transaction.rollback()
 
 
 @task(ignore_result=True)
