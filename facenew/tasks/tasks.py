@@ -86,8 +86,7 @@ def exists_whatsapp(account):
         print str(e)
         pass
 
-# @task(base=DBTask)
-@periodic_task(run_every=datetime.timedelta(minutes=4))
+@task(base=DBTask)
 @transaction.commit_manually
 def message_whatsapp(account, cron_id):
     try:
