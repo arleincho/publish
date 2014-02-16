@@ -107,7 +107,7 @@ def message_whatsapp(account, message):
 
 @task(ignore_result=True)
 def launch_messege_whatsapp(account, cron_id):
-    interval = 10
+    interval = 15
     limit = 60
     step = (limit/interval)
     account = Account.objects.get(phone=account, enabled=True)
@@ -125,6 +125,7 @@ def periodic(scheduler, interval, params, action, actionargs=()):
             (scheduler, interval, params, action, actionargs))
         action(*actionargs)
         params['step'] += 1
+    else:
         scheduler.run()
 
 
