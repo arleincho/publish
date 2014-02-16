@@ -104,7 +104,7 @@ def message_whatsapp(account, cron_id):
         wa.login(phone_number, password)
 
 
-@task(ignore_result=True):
+@task(ignore_result=True)
 def launch_messege_whatsapp():
     send_task.dealy('573123859829', 26)
 
