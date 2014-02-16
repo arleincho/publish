@@ -99,21 +99,23 @@ def message_whatsapp(account, message):
         transaction.commit()
         # wa = WhatsappEchoClient(phone.phone, message.message.encode('utf-8'))
         wa = WhatsappEchoClient('573102436410', message.message.encode('utf-8'), False, message_phone_whatsapp)
-        wa.login(phone_number, password)
-    except Exception:
+        wa.login(account['phone_number'], account['password'])
+    except Exception, e:
         transaction.rollback()
+        print str(e)
 
 
 @task(ignore_result=True)
 def launch_messege_whatsapp(account, cron_id):
-    count = 4
-    step = (60/count)
+    interval = 5
+    limit = 60
+    step = (limit/interval)
     account = Account.objects.get(phone=account, enabled=True)
     password = base64.b64decode(bytes(account.password.encode('utf-8')))
     phone_number = account.phone
     message = Message.objects.filter(date__lte=datetime.date.today(), crontab=cron_id, type_message='whatsapp', enabled=True).first()
     scheduler = sched.scheduler(time.time, time.sleep)
-    periodic(scheduler, count, {'stop': step, 'step': 1}, current_app.send_task,
+    periodic(scheduler, interval, {'stop': step, 'step': 1}, current_app.send_task,
         ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
 
 
