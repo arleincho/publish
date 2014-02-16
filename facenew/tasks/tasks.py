@@ -125,8 +125,7 @@ def periodic(scheduler, interval, params, action, actionargs=()):
             (scheduler, interval, params, action, actionargs))
         action(*actionargs)
         params['step'] += 1
-    else:
-        scheduler.run()
+    scheduler.run()
 
 
 @task(base=DBTask, name="facenew.task.task.share_facebook")
