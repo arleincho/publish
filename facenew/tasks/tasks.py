@@ -107,7 +107,7 @@ def message_whatsapp(account, message):
 
 @task(ignore_result=True)
 def launch_messege_whatsapp(account, cron_id):
-    interval = 5
+    interval = 10
     limit = 60
     step = (limit/interval)
     account = Account.objects.get(phone=account, enabled=True)
