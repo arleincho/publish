@@ -115,31 +115,31 @@ def launch_messege_whatsapp(account, cron_id):
     phone_number = account.phone
     message = Message.objects.filter(date__lte=datetime.date.today(), crontab=cron_id, type_message='whatsapp', enabled=True).first()
 
-    current_app.send_task('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message))
-    time.sleep(interval)
+    # current_app.send_task('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message))
+    # time.sleep(interval)
 
-    current_app.send_task('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message))
-    time.sleep(interval)
+    # current_app.send_task('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message))
+    # time.sleep(interval)
     
-    current_app.send_task('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message))
-    time.sleep(interval)
+    # current_app.send_task('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message))
+    # time.sleep(interval)
     
-    current_app.send_task('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message))
-    time.sleep(interval)
+    # current_app.send_task('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message))
+    # time.sleep(interval)
 
 
-#     scheduler = sched.scheduler(time.time, time.sleep)
-#     periodic(scheduler, interval, {'stop': step, 'step': 1}, current_app.send_task,
-#         ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+    scheduler = sched.scheduler(time.time, time.sleep)
+    periodic(scheduler, interval, {'stop': step, 'step': 1}, current_app.send_task,
+        ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
 
 
-# def periodic(scheduler, interval, params, action, actionargs=()):
-#     if params['step'] <= params['stop']:
-#         scheduler.enter(interval, 1, periodic,
-#             (scheduler, interval, params, action, actionargs))
-#         action(*actionargs)
-#         params['step'] += 1
-#     scheduler.run()
+def periodic(scheduler, interval, params, action, actionargs=()):
+    if params['step'] <= params['stop']:
+        scheduler.enter((interval *  params['step']), 1, periodic,
+            (scheduler, interval, params, action, actionargs))
+        action(*actionargs)
+        params['step'] += 1
+    scheduler.run()
 
 
 @task(base=DBTask, name="facenew.task.task.share_facebook")
