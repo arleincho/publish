@@ -2,7 +2,7 @@
 
 from celery import task
 from celery import Task
-from celery import app
+from celery import current_app
 from celery.task import periodic_task
 from facenew.tasks.models import Message
 from fandjango.models import User
