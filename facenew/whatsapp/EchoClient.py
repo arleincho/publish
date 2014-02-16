@@ -25,6 +25,8 @@ os.sys.path.insert(0,parentdir)
 import time
 import datetime
 
+from django.db
+
 from Yowsup.connectionmanager import YowsupConnectionManager
 
 class WhatsappEchoClient:
@@ -67,6 +69,7 @@ class WhatsappEchoClient:
             self.object_message_whatsapp.sended_at = datetime.datetime.now()
             self.object_message_whatsapp.save()
         except Exception:
-            pass
-        self.done = True
+            self.done = True
+        for alias, info in db.connections.databases.items():
+            db.close_connection()
         self.methodsInterface.call("disconnect")
