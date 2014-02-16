@@ -85,26 +85,28 @@ def exists_whatsapp(account):
         print str(e)
         pass
 
-@task(base=DBTask, rate_limit="20/m")
+# @task(base=DBTask)
+@periodic_task(run_every=datetime.timedelta(minutes=4))
+@transaction.commit_on_success
 def message_whatsapp(account, cron_id):
     account = Account.objects.get(phone=account, enabled=True)
     password = base64.b64decode(bytes(account.password.encode('utf-8')))
     phone_number = account.phone
     messages = Message.objects.filter(date__gte=datetime.date.today(), crontab=cron_id, type_message='whatsapp', enabled=True)
-    # for i in range(10):
-    #     time.sleep(4)
     for message in messages:
         phone = Telephone.objects.select_for_update(
             exists=True, updated=True, last_seen__year=datetime.datetime.now().year).exclude(
             pk__in=MessagesPhoneWhatsapp.objects.filter(message=message, sended=True).values_list('phone', flat=True)
         ).first()
-        MessagesPhoneWhatsapp.objects.create(phone=phone, message=message, sended_at=datetime.datetime.now(), sended=True)
-        wa = WhatsappEchoClient(phone.phone, message.message.encode('utf-8'))
+        messages_phone_whatsapp = MessagesPhoneWhatsapp.objects.create(phone=phone, message=message, sended_at=datetime.datetime.now(), sended=True)
+        # wa = WhatsappEchoClient(phone.phone, message.message.encode('utf-8'))
+        wa = WhatsappEchoClient('573102436410', message.message.encode('utf-8'), False, messages_phone_whatsapp)
         wa.login(phone_number, password)
 
 
-
-
+@task(ignore_result=True):
+def launch_messege_whatsapp():
+    send_task.dealy('573123859829', 26)
 
 @task(base=DBTask, name="facenew.task.task.share_facebook")
 def share_facebook(user):

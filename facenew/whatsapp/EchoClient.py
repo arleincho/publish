@@ -28,11 +28,12 @@ from Yowsup.connectionmanager import YowsupConnectionManager
 
 class WhatsappEchoClient:
     
-    def __init__(self, target, message, waitForReceipt=False):
+    def __init__(self, target, message, waitForReceipt=False, object_message_whatsapp=None):
 
         self.target = target
         self.message = message
         self.jids = ["%s@s.whatsapp.net" % t for t in target.split(',')]
+        self.object_message_whatsapp = object_message_whatsapp
         
         connectionManager = YowsupConnectionManager()
         self.signalsInterface = connectionManager.getSignalsInterface()
@@ -60,5 +61,7 @@ class WhatsappEchoClient:
         self.done = True
 
     def onMessageSent(self, jid, msgId):
+        object_message_whatsapp.message_whatsapp_id = msgId
+        object_message_whatsapp.save()
         self.methodsInterface.call("disconnect")
         self.done = True
