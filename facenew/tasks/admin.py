@@ -16,14 +16,14 @@ class MessageAdmin(admin.ModelAdmin):
 
 
 
-class MessagesPhoneWhatsappAdmin(admin.ModelAdmin):
+class UserCrontabScheduleAdmin(admin.ModelAdmin):
 
     list_display = ('user', 'periodic_task')
 
     def has_add_permission(self, request):
         return False
 
-class MessagesTelephoneAdmin(admin.ModelAdmin):
+class MessagesPhoneWhatsappAdmin(admin.ModelAdmin):
 
     list_display = ('phone', 'message', 'sended', 'sended_at')
 
