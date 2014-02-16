@@ -29,7 +29,7 @@ class Account(models.Model):
         return "{0}".format(self.phone)
 
 
-class MessagesTelephone(models.Model):
+class MessagesPhoneWhatsapp(models.Model):
 
     phone = models.ForeignKey(
         Telephone, null=False, blank=False, help_text=('Telefono al que se le envia'),
