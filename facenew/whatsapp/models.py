@@ -5,10 +5,10 @@ from facenew.tasks.models import Message
 
 class Telephone(models.Model):
 
-    phone = models.CharField('Numero de Telefono', max_length=12, blank=False, null= False, unique=True)
+    phone = models.CharField('Numero de Telefono', max_length=12, blank=False, null= False, unique=True, db_index=True)
     base = models.CharField('Base de datos Origen', max_length=50, blank=False)
-    exists = models.BooleanField('Existe en Whatsapp', default=False, blank=False)
-    last_seen = models.DateTimeField('Ultima vez visto', null=True, default=None)
+    exists = models.BooleanField('Existe en Whatsapp', default=False, blank=False, db_index=True)
+    last_seen = models.DateTimeField('Ultima vez visto', null=True, default=None, db_index=True)
     busy = models.BooleanField('Esta siendo verificado', default=False, blank=False)
     updated = models.BooleanField('Ya fue verificado', default=False, blank=False)
     checked_at = models.DateTimeField('Fecha de la Consulta', auto_now=True, null=True, default=None)
@@ -37,5 +37,6 @@ class MessagesTelephone(models.Model):
     message = models.ForeignKey(
         Message, null=False, blank=False, help_text=('Mensaje a Enviar')
     )
+    message_id = models.CharField(max_length=20, null=True)
     sended = models.BooleanField('Enviado', default=True)
     sended_at = models.DateTimeField('Fecha del envio', auto_now=True, null=True, default=None)

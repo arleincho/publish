@@ -54,6 +54,7 @@ class WhatsappEchoClient:
         self.methodsInterface.call("ready")
         self.methodsInterface.call("message_send", (self.jids[0], self.message))
 
+
     def onAuthFailed(self, username, err):
         self.methodsInterface.call("disconnect")
         self.done = True

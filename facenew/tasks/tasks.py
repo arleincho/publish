@@ -95,7 +95,7 @@ def message_whatsapp(account, cron_id):
     #     time.sleep(4)
     for message in messages:
         phone = Telephone.objects.select_for_update(
-            updated=True, exists=True, last_seen__year=datetime.datetime.now().year).exclude(
+            exists=True, updated=True, last_seen__year=datetime.datetime.now().year).exclude(
             pk__in=MessagesTelephone.objects.filter(message=message, sended=True).values_list('phone', flat=True)
         ).first()
         MessagesTelephone.objects.create(phone=phone, message=message, sended_at=datetime.datetime.now(), sended=True)
