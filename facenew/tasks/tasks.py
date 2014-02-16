@@ -22,6 +22,7 @@ from django.db import transaction
 import time, datetime
 from datetime import timedelta
 import threading,time, base64
+import sched
 
 from Yowsup.connectionmanager import YowsupConnectionManager
 from Yowsup.Common.utilities import Utilities
@@ -88,30 +89,42 @@ def exists_whatsapp(account):
 
 @task(base=DBTask)
 @transaction.commit_manually
-def message_whatsapp(account, cron_id):
+def message_whatsapp(account, message):
     try:
-        account = Account.objects.get(phone=account, enabled=True)
-        password = base64.b64decode(bytes(account.password.encode('utf-8')))
-        phone_number = account.phone
-        messages = Message.objects.filter(crontab=cron_id, type_message='whatsapp', enabled=True)
-        for message in messages:
-            phone = Telephone.objects.select_for_update(
-                exists=True, updated=True, last_seen__year=datetime.datetime.now().year).exclude(
-                pk__in=MessagesPhoneWhatsapp.objects.filter(message=message, sended=True).values_list('phone', flat=True)
-            ).first()
-            message_phone_whatsapp = MessagesPhoneWhatsapp.objects.create(phone=phone, message=message)
-            transaction.commit()
-            # wa = WhatsappEchoClient(phone.phone, message.message.encode('utf-8'))
-            wa = WhatsappEchoClient('573102436410', message.message.encode('utf-8'), False, message_phone_whatsapp)
-            wa.login(phone_number, password)
+        phone = Telephone.objects.select_for_update(
+            exists=True, updated=True, last_seen__year=datetime.datetime.now().year).exclude(
+            pk__in=MessagesPhoneWhatsapp.objects.filter(message=message, sended=True).values_list('phone', flat=True)
+        ).first()
+        message_phone_whatsapp = MessagesPhoneWhatsapp.objects.create(phone=phone, message=message)
+        transaction.commit()
+        # wa = WhatsappEchoClient(phone.phone, message.message.encode('utf-8'))
+        wa = WhatsappEchoClient('573102436410', message.message.encode('utf-8'), False, message_phone_whatsapp)
+        wa.login(phone_number, password)
     except Exception:
         transaction.rollback()
 
 
 @task(ignore_result=True)
-def launch_messege_whatsapp():
-    # app.App.send_task('message_whatsapp', '573123859829', 26)
-    current_app.send_task('facenew.tasks.tasks.message_whatsapp', ('573123859829', 26))
+def launch_messege_whatsapp(account, cron_id):
+    count = 4
+    step = (60/count)
+    account = Account.objects.get(phone=account, enabled=True)
+    password = base64.b64decode(bytes(account.password.encode('utf-8')))
+    phone_number = account.phone
+    message = Message.objects.filter(crontab=cron_id, type_message='whatsapp', enabled=True).first()
+    scheduler = sched.scheduler(time.time, time.sleep)
+    periodic(scheduler, count, {'stop': step, 'step': 1}, current_app.send_task,
+        ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+
+
+def periodic(scheduler, interval, params, action, actionargs=()):
+    if params['step'] <= params['stop']:
+        scheduler.enter(interval, 1, periodic,
+            (scheduler, interval, params, action, actionargs))
+        action(*actionargs)
+        params['step'] += 1
+        scheduler.run()
+
 
 @task(base=DBTask, name="facenew.task.task.share_facebook")
 def share_facebook(user):
