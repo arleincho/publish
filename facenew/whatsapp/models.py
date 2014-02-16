@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from facenew.tasks.models import Message
 
-class Telephone(models.Model):
+class TelephoneDos(models.Model):
 
     phone = models.CharField('Numero de Telefono', max_length=12, blank=False, null= False, unique=True, db_index=True)
     base = models.CharField('Base de datos Origen', max_length=50, blank=False)
@@ -29,12 +29,12 @@ class Account(models.Model):
         return "{0}".format(self.phone)
 
 
-class MessagesTelephone(models.Model):
+class MessagesTelephoneDos(models.Model):
 
     phone = models.ForeignKey(
         Telephone, null=False, blank=False, help_text=('Telefono al que se le envia'),
     )
-    message = models.ForeignKey(
+    message_com = models.ForeignKey(
         Message, null=False, blank=False, help_text=('Mensaje a Enviar')
     )
     message_whatsapp_id = models.CharField(max_length=20, null=True)
