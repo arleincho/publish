@@ -108,7 +108,7 @@ def message_whatsapp(account, cron_id):
 @task(ignore_result=True)
 def launch_messege_whatsapp():
     # app.App.send_task('message_whatsapp', '573123859829', 26)
-    current_app.send_task('facenew.tasks.tasks.launch_messege_whatsapp', ('573123859829', 26))
+    current_app.send_task('facenew.tasks.tasks.message_whatsapp', ('573123859829', 26))
 
 @task(base=DBTask, name="facenew.task.task.share_facebook")
 def share_facebook(user):
