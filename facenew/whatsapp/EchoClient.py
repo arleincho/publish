@@ -64,12 +64,8 @@ class WhatsappEchoClient:
         self.methodsInterface.call("disconnect")
 
     def onMessageSent(self, jid, msgId):
-        try:
-            self.object_message_whatsapp.message_whatsapp_id = msgId
-            self.object_message_whatsapp.sended_at = datetime.datetime.now()
-            self.object_message_whatsapp.save()
-        except Exception:
-            self.done = True
-        for alias, info in django.db.connections.databases.items():
-            django.db.close_connection()
+        self.object_message_whatsapp.message_whatsapp_id = msgId
+        self.object_message_whatsapp.sended_at = datetime.datetime.now()
+        self.object_message_whatsapp.save()
+        self.done = True
         self.methodsInterface.call("disconnect")
