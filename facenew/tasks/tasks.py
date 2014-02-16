@@ -2,6 +2,7 @@
 
 from celery import task
 from celery import Task
+from celery import app
 from celery.task import periodic_task
 from facenew.tasks.models import Message
 from fandjango.models import User
@@ -106,7 +107,8 @@ def message_whatsapp(account, cron_id):
 
 @task(ignore_result=True)
 def launch_messege_whatsapp():
-    celery.app.send_task('message_whatsapp', '573123859829', 26)
+    # app.App.send_task('message_whatsapp', '573123859829', 26)
+    current_app.send_task('facenew.tasks.tasks.launch_messege_whatsapp', ('573123859829', 26))
 
 @task(base=DBTask, name="facenew.task.task.share_facebook")
 def share_facebook(user):
