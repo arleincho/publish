@@ -34,5 +34,7 @@ $w->connect();
 $w->loginWithPassword($password);
 $w->eventManager()->bind("onMessageReceivedServer", "onMessageReceivedServer");
 $w->sendMessage($target, $message);
-$w->sendMessageImage($target, $image);
+if ($image){
+	$w->sendMessageImage($target, $image);
+}
 $w->pollMessages();
