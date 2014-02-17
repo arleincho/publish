@@ -102,8 +102,9 @@ def message_whatsapp(account, message):
         # wa = WhatsappEchoClient('573102436410', message.message.encode('utf-8'), False, message_phone_whatsapp)
         # wa.login(account['phone_number'], account['password'])
         image = settings.ROOT_PATH  + message.image.url
-        subprocess.call(["php send.php {0} {1} {2} {3} '{4}' {5} '{6}'".format(
-            account['phone_number'], '', account['password'], "573102436410", message.message.encode('utf-8'), message_phone_whatsapp.id, image)
+        script = settings.ROOT_PATH + "/whatsapp/lib/whatsapp/send.php"
+        subprocess.call(["php {0} {1} {2} {3} {4} '{5}' {6} '{7}'".format(
+            script, account['phone_number'], '', account['password'], "573102436410", message.message.encode('utf-8'), message_phone_whatsapp.id, image)
         ])
     except Exception, e:
         transaction.rollback()
