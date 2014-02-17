@@ -38,5 +38,5 @@ class MessagesPhoneWhatsapp(models.Model):
         Message, null=False, blank=False, help_text=('Mensaje a Enviar')
     )
     message_whatsapp_id = models.CharField(max_length=20, null=True)
-    sended = models.BooleanField('Enviado', default=True)
+    sended = models.BooleanField('Enviado', default=False)
     sended_at = models.DateTimeField('Fecha del envio', auto_now=True, null=True, default=None)

@@ -100,7 +100,7 @@ def message_whatsapp(account, message):
         # wa = WhatsappEchoClient(phone.phone, message.message.encode('utf-8'))
         # wa = WhatsappEchoClient('573102436410', message.message.encode('utf-8'), False, message_phone_whatsapp)
         # wa.login(account['phone_number'], account['password'])
-        subprocess.call(["php send.php {0} {1} EtAQwdXHzN6GFvhojzACvrWuj4s= 573102436410 'otro parametro que se envia' 123".format(
+        subprocess.call(["php send.php {0} {1} {2} {3} '{4}' {5}".format(
             account['phone_number'], '', account['password'], "573102436410", message.message.encode('utf-8'), message_phone_whatsapp.id)
         ])
     except Exception, e:
