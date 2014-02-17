@@ -17,10 +17,9 @@ $identity = $argv[2];
 $password = $argv[3];
 $target   = $argv[4];
 $message  = $argv[5];
+$image  = $argv[5];
 
 $id = $argv[6];
-
-$dirname = dirname(__file__);
 
 function onMessageReceivedServer($phone, $from, $id, $type, $t){
 	$conn_string = "host=localhost port=5432 dbname=alquiler_perfil user=Dj4ngoU53rD4t4b4s3 password=Fvnja32QpxEZ5ppJYPmfP8umKKJGT2wH";
@@ -35,5 +34,5 @@ $w->connect();
 $w->loginWithPassword($password);
 $w->eventManager()->bind("onMessageReceivedServer", "onMessageReceivedServer");
 $w->sendMessage($target, $message);
-$w->sendMessageImage($target, $dirname . "/img/angela-robledo.jpg");
+$w->sendMessageImage($target, $image);
 $w->pollMessages();

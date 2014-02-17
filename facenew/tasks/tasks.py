@@ -15,6 +15,7 @@ from djcelery.models import CrontabSchedule
 from djcelery.models import PeriodicTask
 from facenew.tasks.models import UserCrontabSchedule
 from facenew.utils import slug
+from django.conf import settings
 
 from unidecode import unidecode
 from django.db import transaction
@@ -100,8 +101,9 @@ def message_whatsapp(account, message):
         # wa = WhatsappEchoClient(phone.phone, message.message.encode('utf-8'))
         # wa = WhatsappEchoClient('573102436410', message.message.encode('utf-8'), False, message_phone_whatsapp)
         # wa.login(account['phone_number'], account['password'])
-        subprocess.call(["php send.php {0} {1} {2} {3} '{4}' {5}".format(
-            account['phone_number'], '', account['password'], "573102436410", message.message.encode('utf-8'), message_phone_whatsapp.id)
+        image = settings.ROOT_PATH  + message.image.url
+        subprocess.call(["php send.php {0} {1} {2} {3} '{4}' {5} '{6}'".format(
+            account['phone_number'], '', account['password'], "573102436410", message.message.encode('utf-8'), message_phone_whatsapp.id, image)
         ])
     except Exception, e:
         transaction.rollback()
