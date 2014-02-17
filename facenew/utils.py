@@ -8,7 +8,7 @@ _mulit_underscore = re.compile(r'[__]+')
 def slug(text, delim=u"_"):
     result = []
     for word in _pre_punct_re.split(text.lower()):
-        # word = word.encode("translit/long/ascii", "replace")
+        word = word.encode("translit/long/ascii", "replace")
         if word:
             result.append(word)
     s = unicode(delim.join(result))

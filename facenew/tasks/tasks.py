@@ -24,6 +24,7 @@ import time, datetime
 from datetime import timedelta
 import threading,time, base64
 import sched
+import urllib2
 
 from Yowsup.connectionmanager import YowsupConnectionManager
 from Yowsup.Common.utilities import Utilities
@@ -101,7 +102,7 @@ def message_whatsapp(account, message):
         # wa = WhatsappEchoClient(phone.phone, message.message.encode('utf-8'))
         # wa = WhatsappEchoClient('573102436410', message.message.encode('utf-8'), False, message_phone_whatsapp)
         # wa.login(account['phone_number'], account['password'])
-        image = settings.ROOT_PATH  + message.image.url
+        image = settings.ROOT_PATH  + urllib2.unquote(message.image.url)
         script = settings.ROOT_PATH + "/whatsapp/lib/whatsapp/send.php"
         print "php {0} {1} {2} {3} {4} '{5}' {6} '{7}'".format(script, account['phone_number'], '', account['password'], "573102436410", message.message.encode('utf-8'), message_phone_whatsapp.id, image)
         subprocess.call(["php {0} {1} {2} {3} {4} '{5}' {6} '{7}'".format(
