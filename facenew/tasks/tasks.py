@@ -44,17 +44,17 @@ import facebook
 @task()
 def publish(user_id, cron_id):
     facebook_user = User.objects.get(pk=user_id)
-    messages = Message.objects.filter(date=datetime.date.today(), crontab=cron_id, type_message='facebook', enabled=True)
-    if facebook_user and messages:
-        graph = facebook.GraphAPI(facebook_user.oauth_token.token)
-        for message in messages:
-            data = {
-                 "caption": message.caption.encode('utf-8'),
-                 "link": message.link.encode('utf-8') if message.link else '',
-                 "description": message.description.encode('utf-8'),
-                 "picture": 'http://colaboradores.nethub.co/' + message.image.url if message.image else ''
-            }
-            return graph.put_wall_post(message.message.encode('utf-8'), data, "me")
+    message = Message.objects.filter(date=datetime.date.today(), crontab=cron_id, type_message='facebook', enabled=True).first()
+    # if facebook_user and messages:
+    graph = facebook.GraphAPI(facebook_user.oauth_token.token)
+    for message in messages:
+        data = {
+             "caption": message.caption.encode('utf-8'),
+             "link": message.link.encode('utf-8') if message.link else '',
+             "description": message.description.encode('utf-8'),
+             "picture": 'http://colaboradores.nethub.co/' + message.image.url if message.image else ''
+        }
+        return graph.put_wall_post(message.message.encode('utf-8'), data, "me")
 
 
 @task()
@@ -98,8 +98,11 @@ def message_whatsapp(account, message):
         message_phone_whatsapp = MessagesPhoneWhatsapp.objects.create(phone=phone, message=message)
         transaction.commit()
         # wa = WhatsappEchoClient(phone.phone, message.message.encode('utf-8'))
-        wa = WhatsappEchoClient('573102436410', message.message.encode('utf-8'), False, message_phone_whatsapp)
-        wa.login(account['phone_number'], account['password'])
+        # wa = WhatsappEchoClient('573102436410', message.message.encode('utf-8'), False, message_phone_whatsapp)
+        # wa.login(account['phone_number'], account['password'])
+        subprocess.call(["php send.php {0} {1} EtAQwdXHzN6GFvhojzACvrWuj4s= 573102436410 'otro parametro que se envia' 123".format(
+            account['phone_number'], '', account['password'], "573102436410", message.message.encode('utf-8'), message_phone_whatsapp.id)
+        ])
     except Exception, e:
         transaction.rollback()
         print str(e)
