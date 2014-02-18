@@ -23,7 +23,7 @@ $id = $argv[6];
 
 function onMessageReceivedServer($phone, $from, $id, $type, $t){
 	$conn_string = "host=localhost port=5432 dbname=alquiler_perfil user=Dj4ngoU53rD4t4b4s3 password=Fvnja32QpxEZ5ppJYPmfP8umKKJGT2wH";
-	$db = pg_connect('alquiler_perfil=foo');
+	$db = pg_connect($conn_string);
 	$data = array('id' => 2);
 	$res = pg_update($db, 'whatsapp_messagesphonewhatsapp', array('message_whatsapp_id' => $id, 'sended_at' => date("Y-m-d H:i:s")), $data);
 }
