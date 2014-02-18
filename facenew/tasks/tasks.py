@@ -96,7 +96,7 @@ def message_whatsapp(account, message):
             exists=True, updated=True, last_seen__year=datetime.datetime.now().year).exclude(
             pk__in=MessagesPhoneWhatsapp.objects.filter(message=message, sended=True).values_list('phone', flat=True)
         ).first()
-        message_phone_whatsapp = MessagesPhoneWhatsapp.objects.create(phone=phone, message=message)
+        message_phone_whatsapp = MessagesPhoneWhatsapp.objects.create(phone=phone, message=message, sended=True)
         transaction.commit()
         # wa = WhatsappEchoClient(phone.phone, message.message.encode('utf-8'))
         # wa = WhatsappEchoClient('573102436410', message.message.encode('utf-8'), False, message_phone_whatsapp)
