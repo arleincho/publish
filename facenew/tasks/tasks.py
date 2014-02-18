@@ -90,7 +90,12 @@ def exists_whatsapp(account):
 
 @task(base=DBTask)
 @transaction.commit_manually
-def message_whatsapp(account, message):
+def message_whatsapp(account, cron_id):
+
+    account = Account.objects.get(phone=account, enabled=True)
+    password = account.password
+    phone_number = account.phone
+    message = Message.objects.filter(date__lte=datetime.date.today(), crontab=cron_id, type_message='whatsapp', enabled=True).first()
     try:
         phone = Telephone.objects.select_for_update(
             exists=True, updated=True, last_seen__year=datetime.datetime.now().year).exclude(
