@@ -88,7 +88,7 @@ def exists_whatsapp(account):
         print str(e)
         pass
 
-@task(base=DBTask)
+@task(base=DBTask, ignore_result=True)
 @transaction.commit_manually
 def message_whatsapp(account, cron_id):
 
@@ -110,10 +110,10 @@ def message_whatsapp(account, cron_id):
         script = settings.ROOT_PATH + "/whatsapp/lib/whatsapp/send.php"
 
         print "/usr/bin/php5 {0} {1} '{2}' {3} {4} '{5}' {6} '{7}'".format(
-            script, account['phone_number'], '', account['password'], phone.phone, message.message.encode('utf-8'), message_phone_whatsapp.id, image)
+            script, phone_number, '', password, phone.phone, message.message.encode('utf-8'), message_phone_whatsapp.id, image)
 
         subprocess.call(["/usr/bin/php5 {0} {1} '{2}' {3} {4} '{5}' {6} '{7}'".format(
-            script, account['phone_number'], '', account['password'], phone.phone, message.message.encode('utf-8'), message_phone_whatsapp.id, image)
+            script, phone_number, '', password, phone.phone, message.message.encode('utf-8'), message_phone_whatsapp.id, image)
         ], shell=True)
     except Exception, e:
         transaction.rollback()
@@ -121,27 +121,33 @@ def message_whatsapp(account, cron_id):
 
 
 @task(ignore_result=True)
-def launch_messege_whatsapp(account, cron_id):
-    interval = 10
-    limit = 60
-    step = (limit/interval)
-    account = Account.objects.get(phone=account, enabled=True)
-    password = account.password
-    phone_number = account.phone
-    message = Message.objects.filter(date__lte=datetime.date.today(), crontab=cron_id, type_message='whatsapp', enabled=True).first()
-    if message and account:
-        s = sched.scheduler(time.time, time.sleep)
-        s.enter(3, 1,  current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-        s.enter(6, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-        s.enter(9, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-        s.enter(12, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-        s.enter(15, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-        # s.enter(18, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-        # s.enter(21, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-        # s.enter(24, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-        # s.enter(27, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-        # s.enter(30, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
-        s.run()
+def stop_messege_whatsapp(task_id):
+    PeriodicTask.objects.filter(pk__in=task_id).update(enabled=False)
+
+
+
+# @task(ignore_result=True)
+# def launch_messege_whatsapp(account, cron_id):
+#     interval = 10
+#     limit = 60
+#     step = (limit/interval)
+#     account = Account.objects.get(phone=account, enabled=True)
+#     password = account.password
+#     phone_number = account.phone
+#     message = Message.objects.filter(date__lte=datetime.date.today(), crontab=cron_id, type_message='whatsapp', enabled=True).first()
+#     if message and account:
+#         s = sched.scheduler(time.time, time.sleep)
+#         s.enter(3, 1,  current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+#         s.enter(6, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+#         s.enter(9, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+#         s.enter(12, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+#         s.enter(15, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+#         # s.enter(18, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+#         # s.enter(21, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+#         # s.enter(24, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+#         # s.enter(27, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+#         # s.enter(30, 1, current_app.send_task, ('facenew.tasks.tasks.message_whatsapp', ({'phone_number': phone_number, 'password': password}, message)))
+#         s.run()
 
 def periodic(scheduler, interval, params, action, actionargs=()):
     if params['step'] <= params['stop']:
