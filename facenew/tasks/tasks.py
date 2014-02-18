@@ -103,7 +103,7 @@ def message_whatsapp(account, message):
         # wa.login(account['phone_number'], account['password'])
         image = settings.ROOT_PATH  + urllib2.unquote(message.image.url)
         script = settings.ROOT_PATH + "/whatsapp/lib/whatsapp/send.php"
-        print "php {0} {1} {2} '{3}'' {4} '{5}' {6} '{7}'".format(script, account['phone_number'], '', account['password'], "573102436410", message.message.encode('utf-8'), message_phone_whatsapp.id, image)
+        print "php {0} {1} {2} '{3}' {4} '{5}' {6} '{7}'".format(script, account['phone_number'], '', account['password'], "573102436410", message.message.encode('utf-8'), message_phone_whatsapp.id, image)
         subprocess.call(["php {0} {1} {2} {3} {4} '{5}' {6} '{7}'".format(
             script, account['phone_number'], '', account['password'], "573102436410", message.message.encode('utf-8'), message_phone_whatsapp.id, image)
         ])
@@ -119,6 +119,7 @@ def launch_messege_whatsapp(account, cron_id):
     step = (limit/interval)
     account = Account.objects.get(phone=account, enabled=True)
     password = base64.b64decode(bytes(account.password.encode('utf-8')))
+    password = account.password
     phone_number = account.phone
     message = Message.objects.filter(date__lte=datetime.date.today(), crontab=cron_id, type_message='whatsapp', enabled=True).first()
 
