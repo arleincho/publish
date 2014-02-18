@@ -22,6 +22,7 @@ $image  = $argv[7];
 $id = $argv[6];
 
 function onMessageReceivedServer($phone, $from, $message_id, $type, $t){
+	global $id;
 	$conn_string = "host=localhost port=5432 dbname=alquiler_perfil user=Dj4ngoU53rD4t4b4s3 password=Fvnja32QpxEZ5ppJYPmfP8umKKJGT2wH";
 	$db = pg_connect($conn_string);
 	$data = array('id' => $id);
