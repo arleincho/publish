@@ -27,7 +27,6 @@ function onMessageReceivedServer($phone, $from, $message_id, $type, $t){
 	$db = pg_connect($conn_string);
 	$data = array('id' => $id);
 	$res = pg_update($db, 'whatsapp_messagesphonewhatsapp', array('message_whatsapp_id' => $message_id, 'sended_at' => date("Y-m-d H:i:s")), $data);
-	print $res;
 }
 
 $w = new WhatsProt($username, $identity, $nickname, $debug);
