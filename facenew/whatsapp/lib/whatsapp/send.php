@@ -17,7 +17,7 @@ $identity = $argv[2];
 $password = $argv[3];
 $target   = $argv[4];
 $message  = $argv[5];
-$image  = $argv[6];
+$image  = $argv[7];
 
 $id = $argv[6];
 
