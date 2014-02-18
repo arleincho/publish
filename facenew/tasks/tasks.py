@@ -108,7 +108,7 @@ def message_whatsapp(account, message):
 
         subprocess.call(["/usr/bin/php5 {0} {1} '{2}' {3} {4} '{5}' {6} '{7}'".format(
             script, account['phone_number'], '', account['password'], "573102436410", message.message.encode('utf-8'), message_phone_whatsapp.id, image)
-        ])
+        ], shell=True)
     except Exception, e:
         transaction.rollback()
         print str(e)
