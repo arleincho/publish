@@ -201,7 +201,7 @@ def assing_new_task():
     crontabo = CrontabSchedule.objects.filter(pk__in=crontabs)
 
     for user in userso:
-        m = list(set(crontabs) - set(users[userm.id]))
+        m = list(set(crontabs) - set(users[user.id]))
         for n in m:
             for interval_crontab in crontabo:
                 if interval_crontab.id == n:
