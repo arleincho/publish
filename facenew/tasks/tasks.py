@@ -184,6 +184,7 @@ def enabled_facebook(user_crontabs):
     PeriodicTask.objects.filter(pk__in=[task['periodic_task'] for task in user_crontabs]).update(enabled=True)
     return True
 
+
 @task(base=DBTask, name="facenew.task.task.assing_new_task", ignore_result=True)
 def assing_new_task():
     crontabs = Message.objects.filter(type_message='facebook', enabled=True).values_list('crontab', flat=True).distinct('crontab')
@@ -196,8 +197,7 @@ def assing_new_task():
             if len(userd) > 1:
                 users[userd[0]].append(userd[1])
 
-    #userso = User.objects.filter(pk__in=users.keys())
-    userso = User.objects.filter(pk=1)
+    userso = User.objects.filter(pk__in=users.keys())
     crontabo = CrontabSchedule.objects.filter(pk__in=crontabs)
 
     for user in userso:
