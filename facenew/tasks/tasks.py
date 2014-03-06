@@ -120,9 +120,9 @@ def message_whatsapp(account, cron_id):
         print str(e)
 
 
-@task(ignore_result=True)
-def stop_messege_whatsapp(task_id):
-    PeriodicTask.objects.filter(pk__in=task_id).update(enabled=False)
+# @task(ignore_result=True)
+# def stop_messege_whatsapp(task_id):
+#     PeriodicTask.objects.filter(pk__in=task_id).update(enabled=False)
 
 
 
