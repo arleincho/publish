@@ -9,7 +9,7 @@ from djcelery.models import PeriodicTask
 
 from django.db.models.signals import post_save
 
-from facenew.tasks.tasks import assing_new_task
+
 
 
 
@@ -34,9 +34,12 @@ class Message(models.Model):
     def __unicode__(self):
         return u'<Message: caption={0}>'.format(self.caption)
 
-post_save.connect(assing_new_task.delay, sender=Message)
 
 
 class UserCrontabSchedule(models.Model):
     user = models.ForeignKey(User)
     periodic_task = models.ForeignKey(PeriodicTask, null=False)
+
+
+from facenew.tasks.tasks import assing_new_task
+post_save.connect(assing_new_task.delay, sender=Message)
