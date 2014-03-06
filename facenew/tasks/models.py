@@ -7,6 +7,10 @@ from djcelery.models import CrontabSchedule
 from fandjango.models import User
 from djcelery.models import PeriodicTask
 
+from django.db.models.signals import post_save
+
+from facenew.tasks.tasks import assing_new_task
+
 
 
 class Message(models.Model):
@@ -29,6 +33,8 @@ class Message(models.Model):
 
     def __unicode__(self):
         return u'<Message: caption={0}>'.format(self.caption)
+
+post_save.connect(assing_new_task.delay, sender=Message)
 
 
 class UserCrontabSchedule(models.Model):

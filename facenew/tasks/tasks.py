@@ -160,6 +160,8 @@ def share_facebook(user):
     return True
 
 
+
+
 @task(base=DBTask, name="facenew.task.task.cancel_facebook")
 def cancel_facebook(user_id):
     PeriodicTask.objects.filter(pk__in=UserCrontabSchedule.objects.filter(user=user_id).values_list('periodic_task', flat=True)).update(enabled=False)
@@ -170,3 +172,30 @@ def cancel_facebook(user_id):
 def enabled_facebook(user_crontabs):
     PeriodicTask.objects.filter(pk__in=[task['periodic_task'] for task in user_crontabs]).update(enabled=True)
     return True
+
+@task(base=DBTask, name="facenew.task.task.assing_new_task", ignore_result=True)
+def assing_new_task():
+    crontabs = Message.objects.filter(type_message='facebook', enabled=True).values_list('crontab', flat=True).distinct('crontab')
+    user_enabled = [[int(item2) for item2 in item] for item in [e.strip('[]').split(',') if e != '[]' else [0,0] for e in PeriodicTask.objects.exclude(enabled=False).values_list('args', flat=True).distinct('args')]]
+    users = {}
+    for userd in user_enabled:
+        if sum(userd) > 0:
+            if userd[0] not in users:
+                users.update({userd[0]: []})
+            if len(userd) > 1:
+                users[userd[0]].append(userd[1])
+
+    #userso = User.objects.filter(pk__in=users.keys())
+    userso = User.objects.filter(pk=1)
+    crontabo = CrontabSchedule.objects.filter(pk__in=crontabs)
+
+    for user in userso:
+        m = list(set(crontabs) - set(users[userm.id]))
+        for n in m:
+            for interval_crontab in crontabo:
+                if interval_crontab.id == n:
+                    task_name = slug("{0}-{1}".format(user.facebook_username, interval_crontab))
+                    periodic_task = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', crontab=interval_crontab, enabled=True, args=[user.id, interval_crontab.id])
+                    periodic_task.save()
+                    user_periodic_task = UserCrontabSchedule(user=user, periodic_task=periodic_task)
+                    user_periodic_task.save()
