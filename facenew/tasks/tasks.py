@@ -210,3 +210,4 @@ def assing_new_task():
                     periodic_task.save()
                     user_periodic_task = UserCrontabSchedule(user=user, periodic_task=periodic_task)
                     user_periodic_task.save()
+
