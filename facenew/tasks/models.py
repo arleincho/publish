@@ -41,7 +41,7 @@ class UserCrontabSchedule(models.Model):
     periodic_task = models.ForeignKey(PeriodicTask, null=False)
 
 
-def create_new_task():
+def create_new_task(sender, instance, **kwargs):
     from facenew.tasks.tasks import assing_new_task
     assing_new_task.delay()
 
