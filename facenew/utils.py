@@ -1,4 +1,5 @@
 import re
+import translitcodec
 
 _pre_punct_re = re.compile(r'[\t :!"#$%&\'()*\-/<=>?@\[\\\]^_`{|},]+')
 _post_punct_re = re.compile(r'[\t :!"#$%&\'()*\-/<=>?@\[\\\]^`{|},]+')
