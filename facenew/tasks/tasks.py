@@ -205,7 +205,7 @@ def assing_new_task():
         for n in m:
             for interval_crontab in crontabo:
                 if interval_crontab.id == n:
-                    task_name = slug("{0}-{1}".format(user.facebook_username, interval_crontab))
+                    task_name = slug("{0}-{1}".format(user.facebook_username if user.facebook_username else user.facebook_id, interval_crontab))
                     periodic_task = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', crontab=interval_crontab, enabled=True, args=[user.id, interval_crontab.id])
                     periodic_task.save()
                     user_periodic_task = UserCrontabSchedule(user=user, periodic_task=periodic_task)
