@@ -153,3 +153,4 @@ CELERY_IMPORTS = ("facenew.tasks.tasks")
 CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
