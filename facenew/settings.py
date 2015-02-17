@@ -141,15 +141,9 @@ FACEBOOK_APPLICATION_INITIAL_PERMISSIONS = ['publish_stream']
 
 BROKER_URL = 'amqp://guest:guest@localhost:5672'
 
-CELERY_RESULT_BACKEND = "mongodb"
-CELERY_MONGODB_BACKEND_SETTINGS = {
-    "host": "127.0.0.1",
-    "port": 27017,
-    "database": "celery",
-    "taskmeta_collection": "my_taskmeta" # Collection name to use for task output
-}
+CELERY_RESULT_BACKEND = "djcelery.backends.database:DatabaseBackend"
 
-CELERY_IMPORTS = ("facenew.tasks.tasks")
+CELERY_IMPORTS = ("tasks.tasks")
 
 # The default Django db scheduler
 CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
