@@ -50,7 +50,6 @@ INSTALLED_APPS = (
     'fandjango',
     'facenew.tasks',
     'import_export',
-    'facenew.whatsapp',
     'south'
 )
 
