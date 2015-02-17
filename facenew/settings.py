@@ -31,9 +31,8 @@ TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = [
     'localhost',
-    '127.0.0.1',
-    '54.235.154.174',
-    'colaboradores.nethub.co'
+    '54.225.78.23',
+    'tuplan.co'
 ]
 
 
@@ -50,7 +49,6 @@ INSTALLED_APPS = (
     'fandjango',
     'facenew.tasks',
     'import_export',
-    'facenew.whatsapp',
     'south'
 )
 
