@@ -91,7 +91,7 @@ header{
     padding:  20px;
 }
 footer {
-    background-color: #fc973e;
+    background-color: #009f99;
      height: 34px;
 }
 
@@ -107,13 +107,13 @@ footer span{
     padding-top: 5px;
 }
 .boton{
-    -moz-box-shadow:inset 0px 1px 0px 0px #fce2c1;
-    -webkit-box-shadow:inset 0px 1px 0px 0px #fce2c1;
-    box-shadow:inset 0px 1px 0px 0px #fce2c1;
-    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffc477), color-stop(1, #fb9e25) );
-    background:-moz-linear-gradient( center top, #ffc477 5%, #fb9e25 100% );
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffc477', endColorstr='#fb9e25');
-    background-color:#ffc477;
+    -moz-box-shadow:inset 0px 1px 0px 0px #05e9e0;
+    -webkit-box-shadow:inset 0px 1px 0px 0px #05e9e0;
+    box-shadow:inset 0px 1px 0px 0px #05e9e0;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #02c5be), color-stop(1, #009f99) );
+    background:-moz-linear-gradient( center top, #02c5be 5%, #009f99 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#02c5be', endColorstr='#009f99');
+    background-color:#009f99;
     -webkit-border-top-left-radius:5px;
     -moz-border-radius-topleft:5px;
     border-top-left-radius:5px;
@@ -127,7 +127,7 @@ footer span{
     -moz-border-radius-bottomleft:5px;
     border-bottom-left-radius:5px;
     text-indent:0;
-    border:1px solid #eeb44f;
+    border:1px solid #009f99;
     display:inline-block;
     color:#ffffff;
     font-family:Arial;
@@ -138,6 +138,6 @@ footer span{
     line-height:50px; 
     text-decoration:none;
     text-align:center;
-    text-shadow:1px 1px 0px #cc9f52;
+    text-shadow:1px 1px 0px #02726e;
     cursor: pointer;
 }

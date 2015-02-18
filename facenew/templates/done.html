@@ -10,28 +10,29 @@
             <div class="form">
             	{% if donacion %}
             	    <br>
-            	    <p><a href="https://www.facebook.com/angelamrobledo" target="_parent">Ir a la página Facebook de Angela Robledo.</a></p>
+            	    <p><a href="https://www.facebook.com/a.mockus" target="_parent">Ir a la página Facebook</a></p>
             	    <br>
                     <p>Gracias por tu donación!</p>
                     <br>
-                    <p>Ya estas donando tu estatus para que tus amigos y familiares vean en tu muro maravillosas frases y fotos alusivas a nuestra campaña pedagógica y ciudadana.</p>
+                    <p>Ya estás donando tu estatus para que tus amigos y familiares vean en tu muro maravillosas frases y fotos alusivas a la marcha por la vida. ¡Gracias! #VidaMarzo8</p>
                     <br>
-                    <span style="font-weight: bold"> Contigo paz haremos a la Cámara por Bogotá: Vota 101 Verde. ¡GRACIAS! </span><br>
+                    <br>
                 {% else %}
                     <br>
-                    <p>Ya estas donando tu estatus para que tus amigos y familiares vean en tu muro maravillosas frases y fotos alusivas a nuestra campaña pedagógica y ciudadana.</p>
+                    <p>Ya estás donando tu estatus para que tus amigos y familiares vean en tu muro maravillosas frases y fotos alusivas a la marcha por la vida. ¡Gracias! #VidaMarzo8</p>
                     <br>
                     <form action="{% url 'facenew.connect.views.cancel' %}" method="post">
                         {% csrf_token %}
                         <input type="submit"  class="boton" value="Retirar mi donación">
                     </form>
                     <br>
-                    <span style="font-weight: bold"> Contigo paz haremos a la Cámara por Bogotá: Vota 101 Verde. ¡GRACIAS! </span><br>
+                    <span style="font-weight: bold">Más información en <a href="http://www.lavidaessagrada.com" target="_blank">www.lavidaessagrada.com</a></span><br>
+                    <br>
                 {% endif %}
             </div>
         </section>
         <footer>
-            <span>¡Contigo paz haremos!</span>
+            <span>#VidaMarzo8</span>
         </footer>
     </div>
 {% endblock %}
