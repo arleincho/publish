@@ -61,7 +61,7 @@ ul ul, ol ol    { margin-top: 0; margin-bottom: 0 }
 u, ins          { text-decoration: underline }
 br:before       { content: "\A"; white-space: pre-line }
 center          { text-align: center }
-:link, :visited { text-decoration: underline }
+:link, :visited { text-decoration: none, color: #02726e; }
 :focus          { outline: thin dotted invert }
 
 /* Begin bidirectionality settings (do not change) */
