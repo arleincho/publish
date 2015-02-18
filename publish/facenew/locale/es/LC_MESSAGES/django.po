@@ -1,0 +1,34 @@
+
+
+msgid "days"
+msgstr "dias"
+
+msgid "hours"
+msgstr "horas"
+
+msgid "minutes"
+msgstr "minutos"
+
+msgid "seconds"
+msgstr "segundos"
+
+msgid "microseconds"
+msgstr "microsegundos"
+
+
+
+
+msgid "Days"
+msgstr "Dias"
+
+msgid "Hours"
+msgstr "Horas"
+
+msgid "Minutes"
+msgstr "Minutos"
+
+msgid "Seconds"
+msgstr "Segundos"
+
+msgid "Microseconds"
+msgstr "Microsegundos"

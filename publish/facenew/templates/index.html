@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load url from future %}
+
+{% block content %}
+    <div class="content">
+        <header>
+            <div class="logo"></div>
+        </header>
+        <section>
+            <div class="form">
+                <p>Sólo con tu apoyo solidario podremos garantizar que la vida en Colombia se valore y se cuide. 
+                <br><br>
+                ¡Dona tu status o estado en Facebook en apoyo a la Marcha por la Vida, que se desarrollará este 8 de marzo. 
+                <br><br>
+                El estatus se donará para que tus amigos y familiares vean en tu muro maravillosas frases y fotos alusivas a la marcha por la vida.</p><br>
+                <form action="{% url 'facenew.connect.views.done' %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit"  class="boton" value="Donar mi estatus">
+                </form>
+                <br><br>
+                <p>Recuerda que en cualquier momento puedes modificar o retirar tu donación.</p>
+
+                <span style="font-weight: bold">Más información en <a href="http://www.lavidaessagrada.com" target="_blank">www.lavidaessagrada.com</a></span><br>
+            </div>
+
+        </section>
+        <footer>
+            <span>#VidaMarzo8</span>
+        </footer>
+    </div>
+{% endblock %}
