@@ -43,7 +43,7 @@ import subprocess
 import facebook
 
 
-@task()
+@task(ignore_result=True)
 def publish(user_id, cron_id):
     facebook_user = User.objects.get(pk=user_id)
     message = Message.objects.filter(date=datetime.date.today(), crontab=cron_id, type_message='facebook', enabled=True).first()
