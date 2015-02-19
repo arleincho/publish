@@ -43,11 +43,7 @@ def share_facebook(user):
     # crontabs = Message.objects.filter(type_message='facebook', enabled=True).values('crontab', 'caption')
     for cron in crontabs:
         interval_crontab = CrontabSchedule.objects.get(pk=int(cron['crontab']))
-        task_name = slug("{0}-{1}".format(user.facebook_username, interval_crontab))
-        periodic_task = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', crontab=interval_crontab, enabled=True, args=[user.id, interval_crontab.id])
-        periodic_task.save()
-        user_periodic_task = UserCrontabSchedule(user=user, periodic_task=periodic_task)
-        user_periodic_task.save()
+        create_periodic_task.delay(user, interval_crontab)
     return True
 
 
@@ -72,9 +68,8 @@ def enabled_facebook(user_crontabs):
 @task(base=DBTask, name="facenew.task.task.assing_new_task", ignore_result=True)
 def assing_new_task():
     crontabs = Message.objects.filter(type_message='facebook', enabled=True).values_list('crontab', flat=True).distinct('crontab')
-
     user_enabled = [[int(item2) for item2 in item] for item in [e.strip('[]').split(',') if e != '[]' else [0,0] for e in PeriodicTask.objects.exclude(enabled=False).values_list('args', flat=True).distinct('args')]]
-    
+
     users = {}
     for userd in user_enabled:
         if sum(userd) > 0:
@@ -88,16 +83,23 @@ def assing_new_task():
 
     for user in userso:
         m = list(set(crontabs) - set(users[user.id]))
-        print m
         for n in m:
             for interval_crontab in crontabo:
-                print interval_crontab
-                print n
                 if interval_crontab.id == n:
-                    task_name = slug("{0}-{1}".format(user.facebook_username if user.facebook_username else user.facebook_id, interval_crontab))
-                    print task_name
-                    periodic_task = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', crontab=interval_crontab, enabled=True, args=[user.id, interval_crontab.id])
-                    periodic_task.save()
-                    user_periodic_task = UserCrontabSchedule(user=user, periodic_task=periodic_task)
-                    user_periodic_task.save()
+                    create_periodic_task.delay(user, interval_crontab)
 
+    user_free = User.objects.exclude(pk__in=users.keys())
+    for user in user_free:
+        for interval_crontab in crontabo:
+            create_periodic_task.delay(user, interval_crontab)
+
+                    
+
+
+@task(base=DBTask, name="facenew.task.task.create_periodic_task", ignore_result=True)
+def create_periodic_task(user, interval_crontab):
+    task_name = slug("{0}-{1}".format(user.facebook_username if user.facebook_username else user.facebook_id, interval_crontab))
+    periodic_task = PeriodicTask(name=task_name, task='facenew.tasks.tasks.publish', crontab=interval_crontab, enabled=True, args=[user.id, interval_crontab.id])
+    periodic_task.save()
+    user_periodic_task = UserCrontabSchedule(user=user, periodic_task=periodic_task)
+    user_periodic_task.save()
