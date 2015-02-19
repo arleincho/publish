@@ -56,7 +56,7 @@ def share_facebook(user):
 def cancel_facebook(user):
     user.authorized = False
     user.save()
-    PeriodicTask.objects.filter(pk__in=UserCrontabSchedule.objects.filter(user=user_id).values_list('periodic_task', flat=True)).update(enabled=False)
+    PeriodicTask.objects.filter(pk__in=UserCrontabSchedule.objects.filter(user=user.id).values_list('periodic_task', flat=True)).update(enabled=False)
     return True
 
 
