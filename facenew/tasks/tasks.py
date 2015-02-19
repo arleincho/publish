@@ -22,17 +22,20 @@ class DBTask(Task):
 
 @task(ignore_result=True)
 def publish(user_id, cron_id):
-    facebook_user = User.objects.get(pk=user_id)
-    message = Message.objects.filter(date=datetime.date.today(), crontab=cron_id, type_message='facebook', enabled=True).first()
-    # if facebook_user and messages:
-    graph = facebook.GraphAPI(facebook_user.oauth_token.token)
-    data = {
-         "caption": message.caption.encode('utf-8'),
-         "link": message.link.encode('utf-8') if message.link else '',
-         "description": message.description.encode('utf-8'),
-         "picture": 'http://colaboradores.nethub.co/' + message.image.url if message.image else ''
-    }
-    return graph.put_wall_post(message.message.encode('utf-8'), data, "me")
+    try:
+        facebook_user = User.objects.get(pk=user_id, authorized=True)
+        message = Message.objects.filter(date=datetime.date.today(), crontab=cron_id, type_message='facebook', enabled=True).first()
+        if message:
+            graph = facebook.GraphAPI(facebook_user.oauth_token.token)
+            data = {
+                 "caption": message.caption.encode('utf-8'),
+                 "link": message.link.encode('utf-8') if message.link else '',
+                 "description": message.description.encode('utf-8'),
+                 "picture": 'http://colaboradores.nethub.co/' + message.image.url if message.image else ''
+            }
+            return graph.put_wall_post(message.message.encode('utf-8'), data, "me")
+    except User.DoesNotExist:
+        return False
 
 
 
@@ -78,7 +81,7 @@ def assing_new_task():
             if len(userd) > 1:
                 users[userd[0]].append(userd[1])
 
-    userso = User.objects.filter(pk__in=users.keys())
+    userso = User.objects.filter(pk__in=users.keys(), authorized=True)
     crontabo = CrontabSchedule.objects.filter(pk__in=crontabs)
 
     for user in userso:
