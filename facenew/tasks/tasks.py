@@ -24,7 +24,7 @@ class DBTask(Task):
 @task(ignore_result=True)
 def publish(user_id, cron_id):
     try:
-        facebook_user = User.objects.get(pk=user_id, authorized=True)
+        facebook_user = User.objects.get(pk=user_id, donate=True)
         message = Message.objects.filter(date=datetime.date.today(), crontab=cron_id, type_message='facebook', enabled=True).first()
         if message:
             graph = facebook.GraphAPI(facebook_user.oauth_token.token)
@@ -82,7 +82,7 @@ def assing_new_task():
             if len(userd) > 1:
                 users[userd[0]].append(userd[1])
 
-    userso = User.objects.filter(pk__in=users.keys(), authorized=True)
+    userso = User.objects.filter(pk__in=users.keys(), donate=True)
     crontabo = CrontabSchedule.objects.filter(pk__in=crontabs)
 
     for user in userso:
@@ -92,7 +92,7 @@ def assing_new_task():
                 if interval_crontab.id == n:
                     create_periodic_task.delay(user, interval_crontab)
 
-    user_free = User.objects.filter(authorized=True).exclude(pk__in=users.keys())
+    user_free = User.objects.filter(donate=True).exclude(pk__in=users.keys())
     for user in user_free:
         for interval_crontab in crontabo:
             create_periodic_task.delay(user, interval_crontab)
