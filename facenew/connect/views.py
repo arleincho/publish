@@ -28,9 +28,9 @@ def done(request):
 
         # if request.method == 'POST':
         donacion = facebook.user.authorized
-        # if not donacion:
-        #     facebook.user.authorized = True
-        #     facebook.user.save()
+        if not donacion:
+            facebook.user.authorized = True
+            facebook.user.save()
             # return render_to_response('index.html', {}, RequestContext(request))
 
         if len(user_crontabs) > 0:
