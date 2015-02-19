@@ -22,7 +22,7 @@ from facenew.tasks.tasks import enabled_facebook
 def done(request):
     if request.facebook.user:
         facebook = request.facebook
-        # user_crontabs = UserCrontabSchedule.objects.filter(user_id=facebook.user.id).values('periodic_task')
+        user_crontabs = UserCrontabSchedule.objects.filter(user_id=facebook.user.id).values('periodic_task')
 
         # donacion = True
 
@@ -33,10 +33,11 @@ def done(request):
             facebook.user.save()
             # return render_to_response('index.html', {}, RequestContext(request))
 
-        #     # if len(user_crontabs) > 0:
-        #     #     enabled_facebook.delay(user_crontabs)
-        #     # else:
-        #     #     share_facebook.delay(facebook.user)
+        if len(user_crontabs) > 0:
+            enabled_facebook.delay(user_crontabs)
+        else:
+            share_facebook.delay(facebook.user)
+
         return render_to_response('done.html', {'donacion': donacion}, RequestContext(request))
 
         # else:
@@ -52,7 +53,5 @@ def cancel(request):
     if request.facebook.user:
         facebook = request.facebook
         if request.method == 'POST':
-            facebook.user.authorized = False
-            facebook.user.save()
-            # cancel_facebook.delay(facebook.user.id)
+            cancel_facebook.delay(facebook.user)
     return render_to_response('index.html', {}, RequestContext(request))
