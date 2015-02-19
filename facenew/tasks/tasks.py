@@ -88,7 +88,7 @@ def assing_new_task():
                 if interval_crontab.id == n:
                     create_periodic_task.delay(user, interval_crontab)
 
-    user_free = User.objects.exclude(pk__in=users.keys())
+    user_free = User.objects.filter(authorized=True).exclude(pk__in=users.keys())
     for user in user_free:
         for interval_crontab in crontabo:
             create_periodic_task.delay(user, interval_crontab)
