@@ -27,7 +27,7 @@ def done(request):
         # donacion = True
 
         # if request.method == 'POST':
-        donacion = facebook.authorized
+        donacion = facebook.user.authorized
         if not donacion:
             return render_to_response('index.html', {}, RequestContext(request))
 
