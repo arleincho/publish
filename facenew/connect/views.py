@@ -22,21 +22,26 @@ from facenew.tasks.tasks import enabled_facebook
 def done(request):
     if request.facebook.user:
         facebook = request.facebook
-        user_crontabs = UserCrontabSchedule.objects.filter(user_id=facebook.user.id).values('periodic_task')
+        # user_crontabs = UserCrontabSchedule.objects.filter(user_id=facebook.user.id).values('periodic_task')
 
-        if request.method == 'POST':
-            if len(user_crontabs) > 0:
-                enabled_facebook.delay(user_crontabs)
-            else:
-                share_facebook.delay(facebook.user)
-            return render_to_response('done.html', {'donacion': True}, RequestContext(request))
+        # donacion = True
 
-        else:
-            if len(user_crontabs) > 0:
-                enabled_facebook.delay(user_crontabs)
-                return render_to_response('done.html', {}, RequestContext(request))
+        # if request.method == 'POST':
+        donacion = facebook.authorized
+        if not donacion:
+            return render_to_response('index.html', {}, RequestContext(request))
 
-        return render_to_response('index.html', {}, RequestContext(request))
+        #     # if len(user_crontabs) > 0:
+        #     #     enabled_facebook.delay(user_crontabs)
+        #     # else:
+        #     #     share_facebook.delay(facebook.user)
+        return render_to_response('done.html', {'donacion': donacion}, RequestContext(request))
+
+        # else:
+            # if len(user_crontabs) > 0:
+            #     enabled_facebook.delay(user_crontabs)
+            #     return render_to_response('done.html', {}, RequestContext(request))
+
 
 
 @csrf_exempt
@@ -45,5 +50,7 @@ def cancel(request):
     if request.facebook.user:
         facebook = request.facebook
         if request.method == 'POST':
-            cancel_facebook.delay(facebook.user.id)
+            facebook.user.authorized = False
+            facebook.user.save()
+            # cancel_facebook.delay(facebook.user.id)
     return render_to_response('index.html', {}, RequestContext(request))
