@@ -15,6 +15,7 @@
                 El estatus se donará para que tus amigos y familiares vean en tu muro maravillosas frases y fotos alusivas a la marcha por la vida.</p><br>
                 <form action="{% url 'facenew.connect.views.done' %}" method="post">
                     {% csrf_token %}
+                    <input type="hidden" name="donate" value="1">
                     <input type="submit"  class="boton" value="Donar mi estatus">
                 </form>
                 <br><br>

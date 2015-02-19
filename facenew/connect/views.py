@@ -24,22 +24,23 @@ def done(request):
         facebook = request.facebook
         user_crontabs = UserCrontabSchedule.objects.filter(user_id=facebook.user.id).values('periodic_task')
 
-        # donacion = True
+        donacion = facebook.user.donate
 
-        # if request.method == 'POST':
-        donacion = facebook.user.authorized
-        if not donacion:
-            facebook.user.authorized = True
-            facebook.user.save()
-            # return render_to_response('index.html', {}, RequestContext(request))
+        if request.method == 'POST':
+            if request.POST.get('donate', False):
+                facebook.user.donate = True
+                facebook.user.save()
 
-        if len(user_crontabs) > 0:
-            enabled_facebook.delay(user_crontabs)
+        if donacion:
+            if len(user_crontabs) > 0:
+                enabled_facebook.delay(user_crontabs)
+            else:
+                share_facebook.delay(facebook.user)
         else:
-            share_facebook.delay(facebook.user)
+            return render_to_response('index.html', {}, RequestContext(request))
+            
 
         return render_to_response('done.html', {'donacion': donacion}, RequestContext(request))
-
         # else:
             # if len(user_crontabs) > 0:
             #     enabled_facebook.delay(user_crontabs)
