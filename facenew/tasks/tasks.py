@@ -31,7 +31,7 @@ def publish(user_id, cron_id):
                  "caption": message.caption.encode('utf-8'),
                  "link": message.link.encode('utf-8') if message.link else '',
                  "description": message.description.encode('utf-8'),
-                 "picture": 'http://colaboradores.nethub.co/' + message.image.url if message.image else ''
+                 "picture": 'https://tuplan.co' + message.image.url if message.image else ''
             }
             return graph.put_wall_post(message.message.encode('utf-8'), data, "me")
     except User.DoesNotExist:
