@@ -12,6 +12,7 @@ from facenew.utils import slug
 
 
 import datetime
+import facebook
 
 
 
