@@ -1,0 +1,143 @@
+html, address,
+html, address,
+blockquote,
+body, dd, div,
+dl, dt, fieldset, form,
+frame, frameset,
+h1, h2, h3, h4,
+h5, h6, noframes,
+ol, p, ul, center,
+dir, hr, menu, pre   { display: block; unicode-bidi: embed }
+li              { display: list-item }
+head            { display: none }
+table           { display: table }
+tr              { display: table-row }
+thead           { display: table-header-group }
+tbody           { display: table-row-group }
+tfoot           { display: table-footer-group }
+col             { display: table-column }
+colgroup        { display: table-column-group }
+td, th          { display: table-cell }
+caption         { display: table-caption }
+th              { font-weight: bolder; text-align: center }
+caption         { text-align: center }
+body            { margin: 8px; font-family: arial;}
+a 		{ text-decoration: none;}
+h2              { font-size: 1.5em; margin: .75em 0 }
+h3              { font-size: 1.17em; margin: .83em 0 }
+h4, p,
+blockquote, ul,
+fieldset, form,
+ol, dl, dir,
+menu            { margin: 0px }
+h5              { font-size: .83em; margin: 1.5em 0 }
+h6              { font-size: .75em; margin: 1.67em 0 }
+h1, h2, h3, h4,
+h5, h6, b,
+strong          { font-weight: bolder }
+blockquote      { margin-left: 40px; margin-right: 40px }
+i, cite, em,
+var, address    { font-style: italic }
+pre, tt, code,
+kbd, samp       { font-family: monospace }
+pre             { white-space: pre }
+button, textarea,
+input, select   { display: inline-block }
+big             { font-size: 1.17em }
+small, sub, sup { font-size: .83em }
+sub             { vertical-align: sub }
+sup             { vertical-align: super }
+table           { border-spacing: 2px; }
+thead, tbody,
+tfoot           { vertical-align: middle }
+td, th, tr      { vertical-align: inherit }
+s, strike, del  { text-decoration: line-through }
+hr              { border: 1px inset }
+ol, ul, dir,
+menu, dd        { margin-left: 40px }
+ol              { list-style-type: decimal }
+ol ul, ul ol,
+ul ul, ol ol    { margin-top: 0; margin-bottom: 0 }
+u, ins          { text-decoration: underline }
+br:before       { content: "\A"; white-space: pre-line }
+center          { text-align: center }
+:link, :visited { text-decoration: underline }
+:focus          { outline: thin dotted invert }
+
+/* Begin bidirectionality settings (do not change) */
+BDO[DIR="ltr"]  { direction: ltr; unicode-bidi: bidi-override }
+BDO[DIR="rtl"]  { direction: rtl; unicode-bidi: bidi-override }
+
+*[DIR="ltr"]    { direction: ltr; unicode-bidi: embed }
+*[DIR="rtl"]    { direction: rtl; unicode-bidi: embed }
+
+
+
+
+.content{	
+    height: 660px;
+    width: 800px;
+
+}
+header{
+	background-image: url("../images/header.jpg");
+    background-repeat: no-repeat;    
+    height: 200px;
+    width: 800px;
+}
+
+
+.form{
+    padding:  20px;
+}
+footer {
+    background-color: #009f99;
+     height: 34px;
+}
+
+footer span{
+  color: #FFFFFF;
+    float: right;
+    font-family: arial;
+    font-size: 23px;
+    font-style: italic;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin-right: 55px;
+    padding-top: 5px;
+}
+.boton{
+    -moz-box-shadow:inset 0px 1px 0px 0px #05e9e0;
+    -webkit-box-shadow:inset 0px 1px 0px 0px #05e9e0;
+    box-shadow:inset 0px 1px 0px 0px #05e9e0;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #02c5be), color-stop(1, #009f99) );
+    background:-moz-linear-gradient( center top, #02c5be 5%, #009f99 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#02c5be', endColorstr='#009f99');
+    background-color:#009f99;
+    -webkit-border-top-left-radius:5px;
+    -moz-border-radius-topleft:5px;
+    border-top-left-radius:5px;
+    -webkit-border-top-right-radius:5px;
+    -moz-border-radius-topright:5px;
+    border-top-right-radius:5px;
+    -webkit-border-bottom-right-radius:5px;
+    -moz-border-radius-bottomright:5px;
+    border-bottom-right-radius:5px;
+    -webkit-border-bottom-left-radius:5px;
+    -moz-border-radius-bottomleft:5px;
+    border-bottom-left-radius:5px;
+    text-indent:0;
+    border:1px solid #009f99;
+    display:inline-block;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    font-style:normal;
+    height:50px;
+    line-height:50px; 
+    text-decoration:none;
+    text-align:center;
+    text-shadow:1px 1px 0px #02726e;
+    cursor: pointer;
+}
